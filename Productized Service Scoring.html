@@ -3,25 +3,27 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Service Scoring Table</title>
+<title>Service Scoring Checklist</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; background: #f5f5f3; color: #2c2c2a; padding: 2rem; }
   .card { background: white; border-radius: 12px; border: 0.5px solid rgba(0,0,0,0.12); padding: 1.5rem; max-width: 900px; margin: 0 auto; }
   .card-title { font-size: 18px; font-weight: 500; color: #1F3864; margin-bottom: 4px; }
   .card-sub { font-size: 13px; color: #5F5E5A; margin-bottom: 1.25rem; }
-  .controls { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-bottom: 1rem; align-items: end; }
+
+  .controls { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 1rem; }
   input[type=text] { width: 100%; font-size: 13px; padding: 8px 12px; border-radius: 6px; border: 0.5px solid rgba(0,0,0,0.2); color: #2c2c2a; background: white; outline: none; }
   input[type=text]:focus { border-color: #2E75B6; }
-  .profile-wrap { display: flex; flex-direction: column; gap: 4px; min-width: 220px; }
-  .profile-label { font-size: 10px; font-weight: 500; color: #5F5E5A; text-transform: uppercase; letter-spacing: 0.05em; }
-  .profile-pills { display: flex; gap: 4px; }
-  .pill { font-size: 11px; font-weight: 500; padding: 5px 10px; border-radius: 20px; border: 0.5px solid rgba(0,0,0,0.18); cursor: pointer; background: white; color: #5F5E5A; transition: all 0.15s; white-space: nowrap; }
+
+  .context-wrap { display: flex; flex-direction: column; gap: 6px; }
+  .context-label { font-size: 10px; font-weight: 500; color: #5F5E5A; text-transform: uppercase; letter-spacing: 0.05em; }
+  .context-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .pill { font-size: 11px; font-weight: 500; padding: 6px 14px; border-radius: 20px; border: 0.5px solid rgba(0,0,0,0.18); cursor: pointer; background: white; color: #5F5E5A; transition: all 0.15s; white-space: nowrap; }
   .pill:hover { border-color: #2E75B6; color: #2E75B6; }
   .pill.active { background: #1F3864; color: white; border-color: #1F3864; }
-  .profile-hint { font-size: 11px; color: #595959; margin-bottom: 1rem; padding: 7px 12px; background: #EBF3FB; border-radius: 6px; border-left: 3px solid #2E75B6; line-height: 1.6; }
 
-  /* Knock-out banner */
+  .context-hint { font-size: 11px; color: #595959; margin-bottom: 1rem; padding: 7px 12px; background: #EBF3FB; border-radius: 6px; border-left: 3px solid #2E75B6; line-height: 1.6; }
+
   .knockout-banner { display: none; font-size: 12px; font-weight: 500; padding: 8px 14px; border-radius: 6px; margin-bottom: 10px; background: #FCE4D6; color: #833C00; border-left: 3px solid #833C00; }
 
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -31,19 +33,19 @@
   tr.knockout-fail td .crit-name { color: #833C00; }
   .section-label { font-size: 10.5px; font-weight: 500; color: #5F5E5A; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 10px 4px; background: #f2f2f0; }
   .badge { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 4px; }
-  .b-v { background: #E6F1FB; color: #185FA5; }
-  .b-d { background: #E1F5EE; color: #0F6E56; }
+  .b-v  { background: #E6F1FB; color: #185FA5; }
+  .b-d  { background: #E1F5EE; color: #0F6E56; }
   .b-ko { background: #FCE4D6; color: #833C00; }
   .crit-name { font-weight: 500; color: #1F3864; display: block; }
-  .crit-sub { font-size: 11px; color: #888780; }
+  .crit-sub  { font-size: 11px; color: #888780; }
   .ko-tag { font-size: 9px; font-weight: 500; color: #833C00; background: #FCE4D6; border-radius: 3px; padding: 1px 5px; margin-left: 5px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.04em; }
 
   .ypn { display: flex; gap: 4px; }
   .ypn-btn { flex: 1; font-size: 11px; font-weight: 500; padding: 5px 4px; border-radius: 4px; border: 0.5px solid rgba(0,0,0,0.15); cursor: pointer; background: white; color: #888780; transition: all 0.15s; text-align: center; }
   .ypn-btn:hover { border-color: #888780; color: #444; }
-  .ypn-btn.sel-yes { background: #E2EFDA; color: #375623; border-color: #375623; }
+  .ypn-btn.sel-yes     { background: #E2EFDA; color: #375623; border-color: #375623; }
   .ypn-btn.sel-partial { background: #FFF2CC; color: #7F6000; border-color: #BA7517; }
-  .ypn-btn.sel-no { background: #FCE4D6; color: #833C00; border-color: #833C00; }
+  .ypn-btn.sel-no      { background: #FCE4D6; color: #833C00; border-color: #833C00; }
 
   .wt-cell { text-align: right; white-space: nowrap; }
   .wt-badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 4px; background: #f2f2f0; color: #595959; transition: all 0.25s; }
@@ -53,18 +55,17 @@
   .score-card { background: #f5f5f3; border-radius: 8px; padding: 12px 14px; }
   .score-label { font-size: 10px; font-weight: 500; color: #5F5E5A; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
   .score-row { display: flex; align-items: baseline; gap: 6px; }
-  .score-num { font-size: 22px; font-weight: 500; color: #1F3864; }
+  .score-num   { font-size: 22px; font-weight: 500; color: #1F3864; }
   .score-denom { font-size: 13px; color: #888780; }
-  .score-pct { font-size: 12px; color: #888780; margin-left: auto; }
+  .score-pct   { font-size: 12px; color: #888780; margin-left: auto; }
   .bar-track { height: 6px; border-radius: 3px; background: rgba(0,0,0,0.08); margin-top: 8px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
+  .bar-fill  { height: 100%; border-radius: 3px; transition: width 0.4s; }
   .bar-v { background: #185FA5; }
   .bar-d { background: #0F6E56; }
 
   .verdict { font-size: 13px; font-weight: 500; padding: 10px 14px; border-radius: 6px; margin-top: 12px; display: none; }
   .verdict-detail { font-size: 11px; font-weight: 400; margin-top: 4px; opacity: 0.85; }
 
-  /* Rules footer */
   .rules { margin-top: 1.25rem; border-top: 0.5px solid rgba(0,0,0,0.08); padding-top: 1rem; }
   .rules-title { font-size: 10px; font-weight: 500; color: #5F5E5A; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
   .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -78,13 +79,13 @@
     input[type=text] { background: #2c2c2a; border-color: rgba(255,255,255,0.15); color: #d4d2c8; }
     .pill { background: #2c2c2a; border-color: rgba(255,255,255,0.15); color: #888780; }
     .pill.active { background: #2E75B6; border-color: #2E75B6; color: white; }
-    .profile-hint { background: #0C2D4A; color: #85B7EB; border-color: #185FA5; }
+    .context-hint { background: #0C2D4A; color: #85B7EB; border-color: #185FA5; }
     .knockout-banner { background: #3d1a0a; color: #F0997B; border-color: #D85A30; }
     th { color: #888780; } td { border-color: rgba(255,255,255,0.07); }
     tr.knockout-row td { background: #2a1a14; }
     .section-label { background: #2c2c2a; color: #888780; }
-    .b-v { background: #0C447C; color: #85B7EB; }
-    .b-d { background: #085041; color: #5DCAA5; }
+    .b-v  { background: #0C447C; color: #85B7EB; }
+    .b-d  { background: #085041; color: #5DCAA5; }
     .b-ko { background: #3d1a0a; color: #F0997B; }
     .crit-name { color: #b5cfe8; }
     .ypn-btn { background: #2c2c2a; color: #888780; border-color: rgba(255,255,255,0.12); }
@@ -103,21 +104,22 @@
 <body>
 <div class="card">
   <div class="card-title">Service scoring checklist</div>
-  <div class="card-sub">Select the client profile, name the service, score each criterion. Knock-out criteria must pass before weighted scores apply.</div>
+  <div class="card-sub">Select what is driving this conversation, name the service, then score each criterion. Knock-out criteria must pass before weighted scores apply.</div>
 
   <div class="controls">
     <input type="text" id="svc-name" placeholder="Service name (e.g. 'AI-powered onboarding audit')" oninput="update()"/>
-    <div class="profile-wrap">
-      <div class="profile-label">Client profile</div>
-      <div class="profile-pills">
-        <button class="pill active" onclick="setProfile('growth',this)">Growth</button>
-        <button class="pill" onclick="setProfile('efficiency',this)">Efficiency</button>
-        <button class="pill" onclick="setProfile('compliance',this)">Compliance</button>
+    <div class="context-wrap">
+      <div class="context-label">What is driving this conversation?</div>
+      <div class="context-pills">
+        <button class="pill active" onclick="setContext('revenue',this)">Revenue growth</button>
+        <button class="pill" onclick="setContext('cost',this)">Cost pressure</button>
+        <button class="pill" onclick="setContext('speed',this)">Speed to market</button>
+        <button class="pill" onclick="setContext('risk',this)">Regulatory / risk</button>
       </div>
     </div>
   </div>
 
-  <div class="profile-hint" id="profile-hint"></div>
+  <div class="context-hint" id="context-hint"></div>
   <div class="knockout-banner" id="ko-banner"></div>
 
   <table>
@@ -130,78 +132,78 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td colspan="4" class="section-label">Client value — does it earn its place?</td></tr>
+      <tr><td colspan="4" class="section-label">Client value - does it earn its place?</td></tr>
       <tr>
-        <td><span class="crit-name">Generates revenue</span><span class="crit-sub">Creates new direct income for client</span></td>
+        <td><span class="crit-name">Generates revenue</span><span class="crit-sub">Creates new direct income for the client</span></td>
         <td><span class="badge b-v">Value</span></td>
         <td><div class="ypn" id="c1">
           <button class="ypn-btn" onclick="score('c1',3,this)">Yes</button>
           <button class="ypn-btn" onclick="score('c1',1,this)">Partial</button>
           <button class="ypn-btn sel-no" onclick="score('c1',0,this)">No</button>
         </div></td>
-        <td class="wt-cell"><span class="wt-badge" id="w-c1">—</span></td>
+        <td class="wt-cell"><span class="wt-badge" id="w-c1">-</span></td>
       </tr>
       <tr>
-        <td><span class="crit-name">Saves costs</span><span class="crit-sub">Reduces existing spend</span></td>
+        <td><span class="crit-name">Saves costs</span><span class="crit-sub">Reduces existing spend - enables gain-share pricing when measurable</span></td>
         <td><span class="badge b-v">Value</span></td>
         <td><div class="ypn" id="c2">
           <button class="ypn-btn" onclick="score('c2',3,this)">Yes</button>
           <button class="ypn-btn" onclick="score('c2',1,this)">Partial</button>
           <button class="ypn-btn sel-no" onclick="score('c2',0,this)">No</button>
         </div></td>
-        <td class="wt-cell"><span class="wt-badge" id="w-c2">—</span></td>
+        <td class="wt-cell"><span class="wt-badge" id="w-c2">-</span></td>
       </tr>
       <tr>
-        <td><span class="crit-name">10× speed-up</span><span class="crit-sub">Meaningfully faster, not just 20%</span></td>
+        <td><span class="crit-name">10x speed-up</span><span class="crit-sub">Meaningfully faster - not just 20%</span></td>
         <td><span class="badge b-v">Value</span></td>
         <td><div class="ypn" id="c3">
           <button class="ypn-btn" onclick="score('c3',3,this)">Yes</button>
           <button class="ypn-btn" onclick="score('c3',1,this)">Partial</button>
           <button class="ypn-btn sel-no" onclick="score('c3',0,this)">No</button>
         </div></td>
-        <td class="wt-cell"><span class="wt-badge" id="w-c3">—</span></td>
+        <td class="wt-cell"><span class="wt-badge" id="w-c3">-</span></td>
       </tr>
       <tr>
-        <td><span class="crit-name">Reduces risk</span><span class="crit-sub">Compliance, security, continuity</span></td>
+        <td><span class="crit-name">Reduces risk</span><span class="crit-sub">Compliance, security, regulatory, continuity</span></td>
         <td><span class="badge b-v">Value</span></td>
         <td><div class="ypn" id="c4">
           <button class="ypn-btn" onclick="score('c4',3,this)">Yes</button>
           <button class="ypn-btn" onclick="score('c4',1,this)">Partial</button>
           <button class="ypn-btn sel-no" onclick="score('c4',0,this)">No</button>
         </div></td>
-        <td class="wt-cell"><span class="wt-badge" id="w-c4">—</span></td>
+        <td class="wt-cell"><span class="wt-badge" id="w-c4">-</span></td>
       </tr>
       <tr>
-        <td><span class="crit-name">Time-to-value</span><span class="crit-sub">Client sees results quickly</span></td>
+        <td><span class="crit-name">Time-to-value</span><span class="crit-sub">Client sees results in weeks, not quarters</span></td>
         <td><span class="badge b-v">Value</span></td>
         <td><div class="ypn" id="c5">
-          <button class="ypn-btn" onclick="score('c5',3,this)">Yes — weeks</button>
-          <button class="ypn-btn" onclick="score('c5',1,this)">Partial — months</button>
-          <button class="ypn-btn sel-no" onclick="score('c5',0,this)">No — quarters</button>
+          <button class="ypn-btn" onclick="score('c5',3,this)">Yes - weeks</button>
+          <button class="ypn-btn" onclick="score('c5',1,this)">Partial - months</button>
+          <button class="ypn-btn sel-no" onclick="score('c5',0,this)">No - quarters</button>
         </div></td>
-        <td class="wt-cell"><span class="wt-badge" id="w-c5">—</span></td>
+        <td class="wt-cell"><span class="wt-badge" id="w-c5">-</span></td>
       </tr>
 
-      <tr><td colspan="4" class="section-label">Defensibility — can we protect it?</td></tr>
+      <tr><td colspan="4" class="section-label">Defensibility - can we protect it?</td></tr>
       <tr class="knockout-row" id="row-d1">
-        <td><span class="crit-name">Repeatable at scale <span class="ko-tag">Knock-out</span></span><span class="crit-sub">No linear cost growth — required minimum: Partial</span></td>
-        <td><span class="badge b-ko">Defense</span></td>
+        <td><span class="crit-name">Repeatable at scale <span class="ko-tag">Knock-out</span></span><span class="crit-sub">No linear cost growth - minimum Partial required</span></td>
+        <td><span class="badge b-ko">K-Out</span></td>
         <td><div class="ypn" id="d1">
           <button class="ypn-btn" onclick="score('d1',3,this)">Yes</button>
           <button class="ypn-btn" onclick="score('d1',1,this)">Partial</button>
           <button class="ypn-btn sel-no" onclick="score('d1',0,this)">No</button>
         </div></td>
-        <td class="wt-cell"><span class="wt-badge" id="w-d1">—</span></td>
+        <td class="wt-cell"><span class="wt-badge" id="w-d1">-</span></td>
       </tr>
       <tr class="knockout-row" id="row-d2">
-        <td><span class="crit-name">Measurable outcome <span class="ko-tag">Knock-out</span></span><span class="crit-sub">Numbers we can defend — required minimum: Partial</span></td>
-        <td><span class="badge b-ko">Defense</span></td>
+        <td><span class="crit-name">Measurable outcome <span class="ko-tag">Knock-out</span></span><span class="crit-sub">Numbers we can defend to procurement - minimum Partial required</span></td>
+        <td><span class="badge b-ko">K-Out</span></td>
         <td><div class="ypn" id="d2">
           <button class="ypn-btn" onclick="score('d2',3,this)">Yes</button>
           <button class="ypn-btn" onclick="score('d2',1,this)">Partial</button>
           <button class="ypn-btn sel-no" onclick="score('d2',0,this)">No</button>
         </div></td>
-        <td class="wt-cell"><span class="wt-badge" id="w-d2">—</span></td>
+        <td class="wt-cell"><span class="wt-badge" id="w-d2">-</span></td>
       </tr>
       <tr>
         <td><span class="crit-name">Differentiated</span><span class="crit-sub">Hard to copy in 3 months</span></td>
@@ -211,27 +213,27 @@
           <button class="ypn-btn" onclick="score('d3',1,this)">Partial</button>
           <button class="ypn-btn sel-no" onclick="score('d3',0,this)">No</button>
         </div></td>
-        <td class="wt-cell"><span class="wt-badge" id="w-d3">—</span></td>
+        <td class="wt-cell"><span class="wt-badge" id="w-d3">-</span></td>
       </tr>
       <tr>
-        <td><span class="crit-name">Continuity pull</span><span class="crit-sub">Client naturally wants the next step from us</span></td>
+        <td><span class="crit-name">Continuity pull</span><span class="crit-sub">Client naturally wants the next step from us - built through results, not lock-in</span></td>
         <td><span class="badge b-d">Defense</span></td>
         <td><div class="ypn" id="d4">
           <button class="ypn-btn" onclick="score('d4',3,this)">Yes</button>
           <button class="ypn-btn" onclick="score('d4',1,this)">Partial</button>
           <button class="ypn-btn sel-no" onclick="score('d4',0,this)">No</button>
         </div></td>
-        <td class="wt-cell"><span class="wt-badge" id="w-d4">—</span></td>
+        <td class="wt-cell"><span class="wt-badge" id="w-d4">-</span></td>
       </tr>
       <tr>
-        <td><span class="crit-name">Data / feedback loop</span><span class="crit-sub">Gets better with every client</span></td>
+        <td><span class="crit-name">Improves with every delivery</span><span class="crit-sub">Each engagement sharpens our methodology, tooling, and benchmarks</span></td>
         <td><span class="badge b-d">Defense</span></td>
         <td><div class="ypn" id="d5">
           <button class="ypn-btn" onclick="score('d5',3,this)">Yes</button>
           <button class="ypn-btn" onclick="score('d5',1,this)">Partial</button>
           <button class="ypn-btn sel-no" onclick="score('d5',0,this)">No</button>
         </div></td>
-        <td class="wt-cell"><span class="wt-badge" id="w-d5">—</span></td>
+        <td class="wt-cell"><span class="wt-badge" id="w-d5">-</span></td>
       </tr>
     </tbody>
   </table>
@@ -242,7 +244,7 @@
       <div class="score-row">
         <span class="score-num" id="v-score">0</span>
         <span class="score-denom" id="v-denom">/ 0</span>
-        <span class="score-pct" id="v-pct">—</span>
+        <span class="score-pct" id="v-pct">-</span>
       </div>
       <div class="bar-track"><div class="bar-fill bar-v" id="v-bar" style="width:0%"></div></div>
     </div>
@@ -251,7 +253,7 @@
       <div class="score-row">
         <span class="score-num" id="d-score">0</span>
         <span class="score-denom" id="d-denom">/ 0</span>
-        <span class="score-pct" id="d-pct">—</span>
+        <span class="score-pct" id="d-pct">-</span>
       </div>
       <div class="bar-track"><div class="bar-fill bar-d" id="d-bar" style="width:0%"></div></div>
     </div>
@@ -262,10 +264,10 @@
   <div class="rules">
     <div class="rules-title">Decision rules</div>
     <div class="rules-grid">
-      <div class="rule-item"><strong>Knock-out first.</strong> Repeatable at scale and Measurable outcome must both be at least Partial. If either is No — stop. Do not productize regardless of other scores.</div>
+      <div class="rule-item"><strong>Knock-out first.</strong> Repeatable at scale and Measurable outcome must both be at least Partial. If either is No - stop. Do not productize regardless of other scores.</div>
       <div class="rule-item"><strong>60% threshold on both sections.</strong> Necessary but not sufficient. A service scoring 65% with all Partials is weaker than one scoring 60% with two clear Yes answers.</div>
       <div class="rule-item"><strong>At least one strong Yes in value.</strong> A service with no single criterion at full Yes has no compelling lead for the sales conversation. Identify the primary hook before productizing.</div>
-      <div class="rule-item"><strong>Profile weights shift priority, not the rules.</strong> Knock-out criteria and the 60% threshold apply across all profiles. The profile only determines which value criteria matter most.</div>
+      <div class="rule-item"><strong>Conversation context shifts weights, not the rules.</strong> Knock-out criteria and the 60% threshold apply regardless of what is driving the deal. The context only determines which value criteria matter most.</div>
     </div>
   </div>
 </div>
@@ -273,27 +275,30 @@
 <script>
 const scores = { c1:0, c2:0, c3:0, c4:0, c5:0, d1:0, d2:0, d3:0, d4:0, d5:0 };
 
-// Weights: [c1-revenue, c2-costs, c3-speed, c4-risk, c5-ttv, d1-repeat(KO), d2-measure(KO), d3-diff, d4-continuity, d5-data]
-// KO criteria (d1, d2) weights apply only after knock-out check passes
-const profiles = {
-  growth: {
-    weights: [3,1,3,1,2, 2,2,2,2,2],
-    hint: "Growth profile — revenue generation and 10× speed-up carry the highest weight. Time-to-value matters: the client needs to see impact fast to justify the next purchase."
+// Weights per context: [c1-revenue, c2-costs, c3-speed, c4-risk, c5-ttv, d1-repeat(KO), d2-measure(KO), d3-diff, d4-continuity, d5-improve]
+const contexts = {
+  revenue: {
+    weights: [3, 1, 2, 1, 2,  2, 2, 2, 2, 2],
+    hint: "Revenue growth - the primary question is whether this service directly creates new income. Speed and time-to-value also matter: the client needs to see impact fast enough to justify the next purchase."
   },
-  efficiency: {
-    weights: [1,3,2,2,2, 2,2,2,2,2],
-    hint: "Efficiency profile — cost savings is the primary driver. Every claim needs a number. Repeatability and measurable outcomes are critical to justify ROI to the CFO."
+  cost: {
+    weights: [1, 3, 1, 1, 2,  2, 3, 2, 2, 2],
+    hint: "Cost pressure - savings need to be quantified and defensible. Measurable outcome carries extra weight because the CFO will demand a number. When savings are clear, this context unlocks gain-share pricing."
   },
-  compliance: {
-    weights: [1,2,1,3,2, 2,2,2,2,1],
-    hint: "Compliance profile — risk reduction leads, but cost savings and time-to-value carry meaningful weight too. The client still pays from a budget and needs to show quick wins to stakeholders."
+  speed: {
+    weights: [2, 1, 3, 1, 3,  3, 2, 2, 2, 2],
+    hint: "Speed to market - the 10x speed-up and time-to-value criteria carry the highest weight. Repeatability at scale also matters more here: consistent fast delivery is what makes the speed claim credible."
+  },
+  risk: {
+    weights: [1, 2, 1, 3, 2,  2, 3, 2, 2, 1],
+    hint: "Regulatory / risk - risk reduction leads, but the client still pays from a budget. Cost savings carry secondary weight, and measurable outcome is critical: regulators and procurement both want evidence."
   }
 };
 
-let currentProfile = 'growth';
+let currentContext = 'revenue';
 
-function setProfile(p, el) {
-  currentProfile = p;
+function setContext(c, el) {
+  currentContext = c;
   document.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
   update();
@@ -307,22 +312,21 @@ function score(id, val, btn) {
 }
 
 function update() {
-  const w = profiles[currentProfile].weights;
-  document.getElementById('profile-hint').textContent = profiles[currentProfile].hint;
+  const w = contexts[currentContext].weights;
+  document.getElementById('context-hint').textContent = contexts[currentContext].hint;
 
   const ids = ['c1','c2','c3','c4','c5','d1','d2','d3','d4','d5'];
   ids.forEach((id, i) => {
     const badge = document.getElementById('w-' + id);
-    badge.textContent = '×' + w[i];
+    badge.textContent = 'x' + w[i];
     badge.className = 'wt-badge' + (w[i] >= 3 ? ' wt-hi' : '');
   });
 
-  // Knock-out check: d1 and d2 must be >= 1 (Partial)
+  // Knock-out check
   const koD1 = scores['d1'] >= 1;
   const koD2 = scores['d2'] >= 1;
   const knockoutPassed = koD1 && koD2;
 
-  // Highlight failing KO rows
   document.getElementById('row-d1').classList.toggle('knockout-fail', !koD1);
   document.getElementById('row-d2').classList.toggle('knockout-fail', !koD2);
 
@@ -337,7 +341,7 @@ function update() {
     koBanner.style.display = 'none';
   }
 
-  // Weighted scores (shown regardless, but verdict blocked if KO fails)
+  // Weighted scores
   let vScore=0, vMax=0, dScore=0, dMax=0;
   for (let i=0; i<5; i++)  { vScore += scores[ids[i]] * w[i]; vMax += 3 * w[i]; }
   for (let i=5; i<10; i++) { dScore += scores[ids[i]] * w[i]; dMax += 3 * w[i]; }
@@ -354,31 +358,29 @@ function update() {
   document.getElementById('v-bar').style.width = Math.round(vp*100) + '%';
   document.getElementById('d-bar').style.width = Math.round(dp*100) + '%';
 
-  // Check for at least one strong Yes in value section
   const hasStrongYes = ['c1','c2','c3','c4','c5'].some(id => scores[id] === 3);
-
   const name = document.getElementById('svc-name').value.trim() || 'This service';
   const vd = document.getElementById('verdict');
   vd.style.display = 'block';
 
   if (!knockoutPassed) {
     vd.style.background='#FCE4D6'; vd.style.color='#833C00';
-    vd.innerHTML = '✗  ' + name + ' — knock-out criteria not met. Fix repeatability or measurability first.<div class="verdict-detail">Weighted scores are for guidance only until both knock-out criteria pass.</div>';
+    vd.innerHTML = '&#x2717;&nbsp;&nbsp;' + name + ' - knock-out criteria not met. Fix repeatability or measurability first.<div class="verdict-detail">Weighted scores are for guidance only until both knock-out criteria pass.</div>';
   } else if (vp >= 0.6 && dp >= 0.6 && hasStrongYes) {
     vd.style.background='#E2EFDA'; vd.style.color='#375623';
-    vd.innerHTML = '✓  ' + name + ' — strong candidate. Productize now.<div class="verdict-detail">Both sections clear 60% and there is at least one clear Yes to lead the sales conversation.</div>';
+    vd.innerHTML = '&#x2713;&nbsp;&nbsp;' + name + ' - strong candidate. Productize now.<div class="verdict-detail">Both sections clear 60% and there is at least one clear Yes to lead the sales conversation.</div>';
   } else if (vp >= 0.6 && dp >= 0.6 && !hasStrongYes) {
     vd.style.background='#FFF2CC'; vd.style.color='#7F6000';
-    vd.innerHTML = '⚠  ' + name + ' — scores pass, but no single strong Yes. Identify the primary value hook before taking this to market.<div class="verdict-detail">A service with no leading strength is hard to position and sell.</div>';
+    vd.innerHTML = '&#x26A0;&nbsp;&nbsp;' + name + ' - scores pass, but no single strong Yes. Identify the primary value hook before going to market.<div class="verdict-detail">A service with no leading strength is hard to position and sell.</div>';
   } else if (vp >= 0.6 && dp < 0.6) {
     vd.style.background='#FFF2CC'; vd.style.color='#7F6000';
-    vd.innerHTML = '⚠  ' + name + ' — good client value, but defensibility needs work.<div class="verdict-detail">Build the moat before committing to productization investment.</div>';
+    vd.innerHTML = '&#x26A0;&nbsp;&nbsp;' + name + ' - good client value, but defensibility needs work.<div class="verdict-detail">Build the moat before committing to productization investment.</div>';
   } else if (vp < 0.6 && dp >= 0.6) {
     vd.style.background='#FFF2CC'; vd.style.color='#7F6000';
-    vd.innerHTML = '⚠  ' + name + ' — defensible, but client value case is too weak.<div class="verdict-detail">Revisit which value criteria this service can genuinely satisfy.</div>';
+    vd.innerHTML = '&#x26A0;&nbsp;&nbsp;' + name + ' - defensible, but client value case is too weak.<div class="verdict-detail">Revisit which value criteria this service can genuinely satisfy.</div>';
   } else {
     vd.style.background='#FCE4D6'; vd.style.color='#833C00';
-    vd.innerHTML = '✗  ' + name + ' — not ready. Both value and defensibility need strengthening.<div class="verdict-detail">Keep as a custom engagement until the fundamentals are in place.</div>';
+    vd.innerHTML = '&#x2717;&nbsp;&nbsp;' + name + ' - not ready. Both value and defensibility need strengthening.<div class="verdict-detail">Keep as a custom engagement until the fundamentals are in place.</div>';
   }
 }
 
