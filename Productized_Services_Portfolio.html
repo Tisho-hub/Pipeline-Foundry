@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Productized Services Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #F7F6F3;
+    --surface: #FFFFFF;
+    --surface2: #F2F1EE;
+    --border: #E2E0DA;
+    --border-strong: #C8C5BD;
+    --text-primary: #1A1916;
+    --text-secondary: #5C5A55;
+    --text-tertiary: #9B9890;
+    --green: #0F6E56;
+    --green-bg: #E1F5EE;
+    --green-border: #5DCAA5;
+    --amber: #854F0B;
+    --amber-bg: #FAEEDA;
+    --amber-border: #EF9F27;
+    --blue: #185FA5;
+    --blue-bg: #E6F1FB;
+    --blue-border: #85B7EB;
+    --purple: #534AB7;
+    --purple-bg: #EEEDFE;
+    --purple-border: #AFA9EC;
+    --coral: #993C1D;
+    --coral-bg: #FAECE7;
+    --coral-border: #F0997B;
+    --teal: #0F6E56;
+    --teal-bg: #E1F5EE;
+    --teal-border: #5DCAA5;
+    --red: #A32D2D;
+    --red-bg: #FCEBEB;
+    --red-border: #F09595;
+    --must: #A32D2D;
+    --must-bg: #FCEBEB;
+    --must-border: #F09595;
+    --should: #854F0B;
+    --should-bg: #FAEEDA;
+    --should-border: #EF9F27;
+    --could: #185FA5;
+    --could-bg: #E6F1FB;
+    --could-border: #85B7EB;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .page { max-width: 960px; margin: 0 auto; padding: 48px 32px 80px; }
+
+  /* HEADER */
+  .page-header { margin-bottom: 48px; }
+  .page-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-tertiary); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 12px; }
+  .page-title { font-size: 28px; font-weight: 600; color: var(--text-primary); line-height: 1.2; margin-bottom: 10px; }
+  .page-sub { font-size: 14px; color: var(--text-secondary); max-width: 620px; line-height: 1.7; }
+
+  /* NAV TABS */
+  .tab-bar { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 36px; overflow-x: auto; }
+  .tab { font-size: 13px; font-weight: 500; color: var(--text-secondary); padding: 10px 16px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; transition: color .15s, border-color .15s; }
+  .tab:hover { color: var(--text-primary); }
+  .tab.active { color: var(--text-primary); border-bottom-color: var(--text-primary); }
+
+  /* PANELS */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* SERVICE CARD */
+  .service-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 0; }
+  .service-header { padding: 24px 28px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 16px; }
+  .service-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-tertiary); padding-top: 2px; flex-shrink: 0; }
+  .service-header-text { flex: 1; }
+  .service-title { font-size: 18px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .service-tagline { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+  .verdict-badge { flex-shrink: 0; font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 20px; }
+  .verdict-green { background: var(--green-bg); color: var(--green); }
+  .verdict-amber { background: var(--amber-bg); color: var(--amber); }
+
+  /* SECTION TABS inside card */
+  .inner-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: var(--surface2); overflow-x: auto; }
+  .itab { font-size: 12px; font-weight: 500; color: var(--text-secondary); padding: 10px 18px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; transition: color .15s, border-color .15s; }
+  .itab:hover { color: var(--text-primary); }
+  .itab.active { color: var(--text-primary); border-bottom-color: var(--text-primary); background: var(--surface); }
+
+  .inner-panel { display: none; padding: 24px 28px; }
+  .inner-panel.active { display: block; }
+
+  /* SECTION LABEL */
+  .slabel { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-tertiary); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 10px; margin-top: 22px; }
+  .slabel:first-child { margin-top: 0; }
+
+  /* SOURCE TAG */
+  .src { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 500; padding: 1px 7px; border-radius: 8px; margin-left: 8px; vertical-align: middle; white-space: nowrap; flex-shrink: 0; }
+  .src-doc  { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-border); }
+  .src-gen  { background: var(--surface2); color: var(--text-tertiary); border: 1px solid var(--border); }
+  .src-asset { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+
+  /* BULLET LISTS */
+  .blist { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .blist li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-primary); line-height: 1.65; }
+  .blist li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--border-strong); flex-shrink: 0; margin-top: 8px; }
+  .blist li .li-content { flex: 1; }
+
+  /* GAPS */
+  .gap-bucket { margin-bottom: 20px; }
+  .bucket-label { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 4px; display: inline-block; margin-bottom: 10px; }
+  .bucket-must   { background: var(--must-bg);   color: var(--must);   border: 1px solid var(--must-border); }
+  .bucket-should { background: var(--should-bg); color: var(--should); border: 1px solid var(--should-border); }
+  .bucket-could  { background: var(--could-bg);  color: var(--could);  border: 1px solid var(--could-border); }
+
+  .gap-item { border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; background: var(--surface); }
+  .gap-item-title { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
+  .gap-value { font-size: 12px; color: var(--text-secondary); margin-top: 5px; display: flex; align-items: flex-start; gap: 6px; }
+  .gap-value-label { font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 4px; flex-shrink: 0; margin-top: 1px; }
+  .measurable   { background: var(--green-bg);  color: var(--green);  border: 1px solid var(--green-border); }
+  .qualitative  { background: var(--blue-bg);   color: var(--blue);   border: 1px solid var(--blue-border); }
+  .money        { background: var(--amber-bg);  color: var(--amber);  border: 1px solid var(--amber-border); font-family: 'DM Mono', monospace; }
+
+  /* PRICING */
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .pricing-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+  .pricing-label { font-size: 10px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+  .pricing-val { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+  .pricing-note { font-size: 12px; color: var(--text-secondary); margin-top: 4px; line-height: 1.5; }
+  .model-pill { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 10px; border-radius: 12px; background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); margin-top: 6px; }
+
+  /* ASSETS */
+  .asset-item { border: 1px solid var(--border); border-radius: 8px; padding: 11px 14px; margin-bottom: 8px; background: var(--surface); display: flex; align-items: flex-start; gap: 10px; }
+  .asset-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; margin-top: 4px; }
+  .asset-dot-doc   { background: var(--purple); }
+  .asset-dot-asset { background: var(--blue); }
+  .asset-dot-gen   { background: var(--border-strong); }
+  .asset-text { flex: 1; font-size: 13px; color: var(--text-primary); line-height: 1.55; }
+
+  /* ENGINE CARDS (PS4) */
+  .engine-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .engine-card { border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; background: var(--surface); }
+  .engine-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-tertiary); margin-bottom: 6px; }
+  .engine-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; }
+  .engine-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px; }
+  .engine-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .etag { font-size: 10px; padding: 2px 8px; border-radius: 8px; font-weight: 500; }
+  .etag-green  { background: var(--green-bg);  color: var(--green);  border: 1px solid var(--green-border); }
+  .etag-blue   { background: var(--blue-bg);   color: var(--blue);   border: 1px solid var(--blue-border); }
+  .etag-amber  { background: var(--amber-bg);  color: var(--amber);  border: 1px solid var(--amber-border); }
+  .etag-purple { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-border); }
+
+  /* REUSABLE ASSETS RECOMMENDATION TABLE */
+  .assets-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .assets-table th { font-size: 11px; font-weight: 600; color: var(--text-tertiary); text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); font-family: 'DM Mono', monospace; letter-spacing: .06em; text-transform: uppercase; }
+  .assets-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text-primary); line-height: 1.6; }
+  .assets-table tr:last-child td { border-bottom: none; }
+  .assets-table tr:hover td { background: var(--surface2); }
+  .pri-high { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 8px; white-space: nowrap; }
+  .pri-med  { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 8px; white-space: nowrap; }
+  .pri-low  { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 8px; white-space: nowrap; }
+  .cat-badge { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 8px; background: var(--surface2); color: var(--text-secondary); border: 1px solid var(--border); white-space: nowrap; }
+
+  /* KO BADGES */
+  .ko-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .ko-badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 10px; }
+  .ko-pass { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+  .ko-part { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 18px 0; }
+
+  /* INTRO SUMMARY STRIP */
+  .summary-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 32px; }
+  .strip-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .strip-num { font-size: 22px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+  .strip-label { font-size: 11px; color: var(--text-secondary); }
+
+  /* UPSELL CHAIN */
+  .chain { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  .chain-node { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; font-size: 12px; font-weight: 500; color: var(--text-primary); }
+  .chain-arrow { color: var(--text-tertiary); font-size: 16px; }
+
+  @media (max-width: 640px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+    .engine-grid { grid-template-columns: 1fr; }
+    .summary-strip { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-header">
+    <div class="page-eyebrow">Pipeline Foundry · Enterprise Portals & CMS Niche</div>
+    <div class="page-title">Productized Services Portfolio</div>
+    <div class="page-sub">Lightweight service definitions for PS#1–5 and PS#6 (Multilingual), PS#7 (Cloud Optimization), PS#4 engine candidates, and a recommended reusable asset build list.</div>
+  </div>
+
+  <div class="summary-strip">
+    <div class="strip-box"><div class="strip-num">3</div><div class="strip-label">Productize now</div></div>
+    <div class="strip-box"><div class="strip-num">4</div><div class="strip-label">Build moat first</div></div>
+    <div class="strip-box"><div class="strip-num">5</div><div class="strip-label">Pre-built engines</div></div>
+    <div class="strip-box"><div class="strip-num">14</div><div class="strip-label">Reusable assets to build</div></div>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('ps1')">PS#1 Upgrade</div>
+    <div class="tab" onclick="switchTab('ps2')">PS#2 Migration</div>
+    <div class="tab" onclick="switchTab('ps3')">PS#3 Discovery</div>
+    <div class="tab" onclick="switchTab('ps5')">PS#5 Health Check</div>
+    <div class="tab" onclick="switchTab('ps6')">PS#6 Multilingual</div>
+    <div class="tab" onclick="switchTab('ps7')">PS#7 Cloud Optimization</div>
+    <div class="tab" onclick="switchTab('ps4')">PS#4 Engines</div>
+    <div class="tab" onclick="switchTab('assets')">Asset Build List</div>
+  </div>
+
+  <!-- ===================== PS1 ===================== -->
+  <div class="panel active" id="tab-ps1">
+    <div class="service-card">
+      <div class="service-header">
+        <div class="service-num">PS#1</div>
+        <div class="service-header-text">
+          <div class="service-title">Sitefinity Upgrade Accelerator</div>
+          <div class="service-tagline">Fixed-scope, time-boxed Sitefinity version upgrade — from technical assessment to go-live in 1–3 weeks.</div>
+          <div class="ko-row">
+            <span class="ko-badge ko-pass">KO-A Repeatable: Pass</span>
+            <span class="ko-badge ko-pass">KO-B Measurable: Pass</span>
+          </div>
+        </div>
+        <span class="verdict-badge verdict-green">Productize now</span>
+      </div>
+      <div class="inner-tabs">
+        <div class="itab active" onclick="switchInner('ps1','scope')">Scope</div>
+        <div class="itab" onclick="switchInner('ps1','deliverables')">Deliverables</div>
+        <div class="itab" onclick="switchInner('ps1','pricing')">Pricing</div>
+        <div class="itab" onclick="switchInner('ps1','assets')">Reusable Assets</div>
+        <div class="itab" onclick="switchInner('ps1','gaps')">Gaps</div>
+      </div>
+
+      <div class="inner-panel active" id="ps1-scope">
+        <div class="slabel">Scope — step by step</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Pre-upgrade technical assessment:</strong> Review the existing Sitefinity implementation, identify customizations, third-party integrations, deprecated APIs, and version-specific risks before a single line of upgrade work begins. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+          <li><div class="li-content"><strong>Version compatibility and upgrade path definition:</strong> Determine the recommended upgrade path (minor, major, or sequential multi-hop) based on the current version, project architecture, and Sitefinity CLI compatibility. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+          <li><div class="li-content"><strong>Backup and rollback planning:</strong> Establish database backup points and a documented rollback procedure before execution begins, so recovery is possible at any stage. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+          <li><div class="li-content"><strong>CLI-based upgrade execution:</strong> Use the Sitefinity CLI tool to execute the upgrade, handle dependency and package updates, and align configurations to the target version — reducing manual variability across engagements. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+          <li><div class="li-content"><strong>Automated regression testing for dynamic modules:</strong> Run automated test suites against Sitefinity dynamic modules to validate core functionality after the upgrade, catching regressions before they reach QA or production. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+          <li><div class="li-content"><strong>Visual regression review:</strong> Use visual comparison tooling to detect styling or UI differences introduced by the upgraded Sitefinity version — covering templates, widgets, and frontend rendering. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+          <li><div class="li-content"><strong>Manual integration testing:</strong> Validate critical third-party integrations, external APIs, custom modules, and payment flows where full automation is not feasible. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+          <li><div class="li-content"><strong>Go-live readiness review and deployment:</strong> Execute final UAT, complete the known-issue checklist, obtain stakeholder sign-off, and support production deployment with a defined stabilization window. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+        </ul>
+        <div class="divider"></div>
+        <div class="slabel">Out of scope</div>
+        <ul class="blist">
+          <li><div class="li-content">Feature development or redesign of existing modules not required for upgrade compatibility.</div></li>
+          <li><div class="li-content">Full redevelopment of deprecated custom widgets where the legacy code is too tightly coupled to the old version — flagged during assessment and quoted separately.</div></li>
+          <li><div class="li-content">Infrastructure or hosting changes beyond what is needed for the upgrade.</div></li>
+        </ul>
+      </div>
+
+      <div class="inner-panel" id="ps1-deliverables">
+        <div class="slabel">Deliverables</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Upgrade assessment and recommended upgrade path report:</strong> A written document covering the current version state, identified risks, deprecated elements, integration dependencies, and the recommended upgrade path with execution plan. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+          <li><div class="li-content"><strong>Upgraded Sitefinity environment:</strong> The target Sitefinity version successfully deployed to the agreed environment, with build and deployment verified. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+          <li><div class="li-content"><strong>Automated test execution results:</strong> A report of automated dynamic module test results, including pass/fail status and any flagged regressions requiring manual follow-up. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+          <li><div class="li-content"><strong>Visual regression report:</strong> A side-by-side visual comparison output highlighting UI and styling changes introduced by the upgrade, with a review summary of accepted vs. actioned items. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+          <li><div class="li-content"><strong>Manual integration testing checklist and results:</strong> A completed checklist documenting which integrations were tested, outcomes, and any outstanding items requiring client action. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+          <li><div class="li-content"><strong>Risk log and known issues summary:</strong> A documented list of known Sitefinity upgrade risks assessed against this specific project, with mitigation status for each. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+          <li><div class="li-content"><strong>Go-live readiness checklist:</strong> A signed-off checklist confirming all upgrade validation steps have been completed and the environment is ready for production. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></li>
+          <li><div class="li-content"><strong>Post-upgrade stabilization support window:</strong> A defined period (typically 5–10 business days) of priority access for issue resolution following production deployment. <span class="src src-gen">Recommended</span></div></li>
+        </ul>
+      </div>
+
+      <div class="inner-panel" id="ps1-pricing">
+        <div class="slabel">Indicative investment</div>
+        <div class="pricing-grid">
+          <div class="pricing-box">
+            <div class="pricing-label">Timeline</div>
+            <div class="pricing-val">1–3 weeks</div>
+            <div class="pricing-note">Minor version upgrades: 1 week. Major version or multi-hop: up to 3 weeks.</div>
+          </div>
+          <div class="pricing-box">
+            <div class="pricing-label">Price range</div>
+            <div class="pricing-val">€3,500 – €12,000</div>
+            <div class="pricing-note">Tiered by version gap, customization depth, and number of integrations.</div>
+          </div>
+        </div>
+        <div class="slabel">Recommended pricing model</div>
+        <div class="pricing-box" style="margin-top:4px">
+          <div class="model-pill">Fixed Fee + Defined Add-ons</div>
+          <div class="pricing-note" style="margin-top:10px">A fixed fee for the standard scope (assessment → upgrade → automated testing → visual regression → go-live) protects margin and signals confidence to the client. Define 2–3 explicit add-ons at a fixed price each: e.g. post-go-live stabilization extension (beyond the standard window), additional integration testing scope, or redevelopment of a deprecated custom widget. This avoids scope creep while giving the client a transparent path to expand. Avoid pure T&M — it undermines the "productized" positioning and invites client micromanagement of hours.</div>
+        </div>
+      </div>
+
+      <div class="inner-panel" id="ps1-assets">
+        <div class="slabel">Reusable assets — from client documents</div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Sitefinity CLI upgrade tool</strong> — Accelerates project setup, dependency updates, and configuration alignment for each upgrade. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Automated test suite for dynamic modules</strong> — Validates key Sitefinity module functionality post-upgrade; reusable across all upgrade engagements. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Visual comparison / regression tooling</strong> — Detects styling and UI changes introduced by upgraded Sitefinity versions. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Standardized upgrade checklists and execution steps</strong> — Repeatable step-by-step checklists that reduce variability and manual error across upgrade engagements. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Known-issue checklist for common Sitefinity upgrade risks</strong> — A curated list of version-specific risks and their mitigations, refined with each delivery. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-doc"></div><div class="asset-text"><strong>Pre-upgrade technical assessment template</strong> — Structures the discovery phase so any senior consultant can run it consistently. <span class="src src-doc">Assessment Master Document</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-doc"></div><div class="asset-text"><strong>Go-live readiness checklist template</strong> — Ensures no validation step is missed before production deployment. <span class="src src-doc">Assessment Master Document – Workshop 4</span></div></div>
+      </div>
+
+      <div class="inner-panel" id="ps1-gaps">
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-must">Must have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Before/after effort case study with real project numbers</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">The 30–60% effort savings claim from the reusable asset document needs to be backed by at least one documented delivery with actual hours-before vs hours-after figures. Without this, the claim cannot be defended in a sales conversation or to a CFO.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> Directly supports premium pricing — a verified 40% saving on a 15-day engagement is a €6,000–€8,000 value narrative at standard rates. Unlocks the fixed-fee pricing model.</div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-item-title">Formalized tiered pricing structure with clear scope boundaries per tier</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">Without documented tier definitions (e.g. Minor / Major / Legacy), every deal risks being scoped from scratch, eroding the repeatability advantage and introducing margin risk.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> Reduces pre-sales scoping effort by an estimated 50–70% per deal; directly protects delivery margin.</div>
+          </div>
+        </div>
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-should">Should have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Public-facing one-pager (PDF or landing page)</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">A single-page sales document that communicates the service scope, timeline, price range, and the "30–60% faster" claim. Required for outbound and referral-driven sales conversations.</div>
+            <div class="gap-value"><span class="gap-value-label qualitative">Qualitative</span> Reduces sales cycle friction; gives the prospect something to share internally without a meeting.</div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-item-title">Standardized post-stabilization feedback capture process</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">A short structured debrief (5–7 questions) run after each delivery to capture what the automated tools caught vs what was missed manually. Feeds directly into the "improves with every delivery" defensibility factor.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> Each delivery should reduce manual testing hours by capturing new automation candidates — compounding the effort saving over time.</div>
+          </div>
+        </div>
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-could">Could have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Partner co-delivery playbook for high-volume upgrade programs</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">For enterprise clients with multiple Sitefinity instances (e.g. a bank with 8 regional portals), a documented co-delivery model would allow the client to run upgrade programs at scale using a mix of internal and partner resources.</div>
+            <div class="gap-value"><span class="gap-value-label qualitative">Qualitative</span> Unlocks enterprise account expansion opportunities; not required for the initial productization.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== PS2 ===================== -->
+  <div class="panel" id="tab-ps2">
+    <div class="service-card">
+      <div class="service-header">
+        <div class="service-num">PS#2</div>
+        <div class="service-header-text">
+          <div class="service-title">Sitefinity Migration Sprint</div>
+          <div class="service-tagline">Structured migration into Sitefinity or Sitefinity SaaS from Sitecore, WordPress, legacy CMS, or older Sitefinity versions — from discovery through to validated go-live.</div>
+          <div class="ko-row">
+            <span class="ko-badge ko-pass">KO-A Repeatable: Pass</span>
+            <span class="ko-badge ko-pass">KO-B Measurable: Pass</span>
+          </div>
+        </div>
+        <span class="verdict-badge verdict-green">Productize now</span>
+      </div>
+      <div class="inner-tabs">
+        <div class="itab active" onclick="switchInner('ps2','scope')">Scope</div>
+        <div class="itab" onclick="switchInner('ps2','deliverables')">Deliverables</div>
+        <div class="itab" onclick="switchInner('ps2','pricing')">Pricing</div>
+        <div class="itab" onclick="switchInner('ps2','assets')">Reusable Assets</div>
+        <div class="itab" onclick="switchInner('ps2','gaps')">Gaps</div>
+      </div>
+
+      <div class="inner-panel active" id="ps2-scope">
+        <div class="slabel">Scope — step by step</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Source system discovery and migration feasibility analysis:</strong> Use the Sitefinity Migration Analyzer to assess the legacy implementation, content model, customizations, and integration landscape — producing a migration complexity score and a recommended approach before any migration work begins. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Content model and field mapping:</strong> Define the target Sitefinity content model and produce a field-to-field mapping matrix from source to target, including taxonomy mapping, media relationships, and transformation rules for rich text, metadata, and URL structures. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Automated content migration execution:</strong> Execute content migration using Excel-based bulk import pipelines and/or Sitefinity OData Headless API ingestion, depending on source system and data structure. Run dry-run imports to validate mapping logic before production migration. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Integration modernization (SaaS track):</strong> For Sitefinity SaaS migrations, use the Sitefinity SaaS Integration Hub to deliver SaaS-compatible integration patterns, accelerating API connector setup and external system enablement. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Legacy code assessment and reimplementation scoping (where applicable):</strong> For old Sitefinity-to-Sitefinity scenarios where a direct upgrade is not viable, assess legacy custom widgets, modules, and integrations and define what must be rebuilt for compatibility with the modern architecture. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Structured validation and QA:</strong> Execute post-import content count validation, field-level data consistency checks, taxonomy and relationship validation, media reference verification, and regression checks for critical page rendering and user journeys. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>URL redirect strategy and SEO handover:</strong> Define and implement a URL redirect map to preserve SEO equity and ensure no broken links after go-live. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Go-live and post-migration support window:</strong> Support production migration execution, stabilization monitoring, and priority issue resolution for a defined period after go-live. <span class="src src-gen">Recommended</span></div></li>
+        </ul>
+        <div class="divider"></div>
+        <div class="slabel">Out of scope</div>
+        <ul class="blist">
+          <li><div class="li-content">New feature development on top of the migrated platform.</div></li>
+          <li><div class="li-content">SEO strategy beyond the technical redirect map (content strategy, keyword work).</div></li>
+          <li><div class="li-content">Source data quality remediation beyond what can be normalized via the migration tooling — flagged during discovery and quoted separately if significant.</div></li>
+        </ul>
+      </div>
+
+      <div class="inner-panel" id="ps2-deliverables">
+        <div class="slabel">Deliverables</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Migration readiness and complexity report:</strong> Output of the Sitefinity Migration Analyzer covering the source system structure, content volume, integration dependencies, identified risks, and recommended migration approach. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Field mapping matrix and content type mapping matrix:</strong> A structured document defining the source-to-target field mapping, transformation rules, and taxonomy definitions — the authoritative reference for the entire migration. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Migrated content environment:</strong> The target Sitefinity or Sitefinity SaaS instance populated with migrated content, validated against the mapping matrix and ready for UAT. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Migration validation report:</strong> Post-import validation results including content count checks, field consistency checks, media verification, and taxonomy relationship validation. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>URL redirect map:</strong> A complete redirect strategy document covering all changed URLs, implemented and tested before go-live. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Legacy component assessment matrix (Sitefinity-to-Sitefinity track):</strong> For modernization projects, a matrix identifying which legacy widgets and modules can be reused, which must be rebuilt, and which can be retired. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>QA checklist and editorial review summary:</strong> Completed structured QA checklists for migrated content, plus a sampling-based editorial review report for business-critical content. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Post-migration stabilization window:</strong> A defined period of priority support after go-live for issue resolution, reconciliation of any failed records, and final sign-off. <span class="src src-gen">Recommended</span></div></li>
+        </ul>
+      </div>
+
+      <div class="inner-panel" id="ps2-pricing">
+        <div class="slabel">Indicative investment</div>
+        <div class="pricing-grid">
+          <div class="pricing-box">
+            <div class="pricing-label">Timeline</div>
+            <div class="pricing-val">3–8 weeks</div>
+            <div class="pricing-note">Standard CMS migration: 3–6 weeks. Legacy Sitefinity SaaS transformation: 6–8 weeks.</div>
+          </div>
+          <div class="pricing-box">
+            <div class="pricing-label">Price range</div>
+            <div class="pricing-val">€12,000 – €40,000</div>
+            <div class="pricing-note">Tiered by source system, content volume, integration complexity, and whether reimplementation is required.</div>
+          </div>
+        </div>
+        <div class="slabel">Recommended pricing model</div>
+        <div class="pricing-box" style="margin-top:4px">
+          <div class="model-pill">Fixed Fee per Track + Defined Add-ons</div>
+          <div class="pricing-note" style="margin-top:10px">Define 3 fixed-fee tracks: (1) Standard CMS Migration, (2) Legacy Sitefinity Modernization, (3) Sitefinity SaaS Transformation. Each track has a defined price based on a standard content volume and integration count. Add-ons at fixed prices cover: additional content types beyond the standard scope, SEO content audit, additional integration connectors, and extended stabilization. This approach prevents the most common migration margin risk — scope expansion during execution — while giving the client full visibility upfront.</div>
+        </div>
+      </div>
+
+      <div class="inner-panel" id="ps2-assets">
+        <div class="slabel">Reusable assets — from client documents</div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Sitefinity Migration Analyzer</strong> — Accelerates discovery, complexity assessment, and migration planning. Reduces estimation effort and provides early risk identification. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Sitefinity SaaS Integration Hub</strong> — Reusable SaaS-compatible integration patterns and connector scaffolding for faster SaaS readiness delivery. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Excel-based import pipelines</strong> — Reusable templates for structured bulk content import into Sitefinity. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Sitefinity OData Headless API migration scripts</strong> — API-driven content ingestion scripts reusable across migration engagements. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Reusable migration and transformation scripts</strong> — Including parsing, normalization, field transformation, batch import utilities, error logging, retry logic, and post-import validation scripts. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Standardized data mapping and transformation workflows</strong> — Repeatable approach for source-to-target mapping, taxonomy definitions, and transformation rule documentation. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Legacy component inventory checklists and modernization playbooks</strong> — For old Sitefinity-to-SaaS transitions, reusable assessment templates and reimplementation planning matrices. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-doc"></div><div class="asset-text"><strong>Project onboarding and inputs checklist</strong> — Structured list of access, credentials, environments, and documentation needed from the client before work begins. <span class="src src-doc">Assessment Master Document – Workshop 3</span></div></div>
+      </div>
+
+      <div class="inner-panel" id="ps2-gaps">
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-must">Must have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">2–3 anonymized case studies with before/after migration timelines and effort savings</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">The 25–45% effort savings claim must be grounded in at least two real deliveries with documented hours. Without this, the fixed-fee pricing model cannot be credibly defended against a client who wants T&M.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> A 35% saving on a typical 40-day migration translates to ~14 days of effort, worth €14,000–€18,000 at standard rates — a compelling ROI story for the fixed-fee pricing.</div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-item-title">Defined scope boundaries per migration track to prevent scope creep</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">Each of the three pricing tracks (Standard / Modernization / SaaS Transformation) needs explicit content volume limits, integration count assumptions, and a documented escalation path when scope is exceeded.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> Scope creep is the primary margin risk in migration projects. Clear boundaries protect the target margin on every engagement.</div>
+          </div>
+        </div>
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-should">Should have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Source-system-specific one-pagers (Sitecore → Sitefinity, WordPress → Sitefinity)</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">Prospects almost always arrive with a specific source system in mind. A one-pager per source system makes the offering immediately relevant and reduces the need for a custom scoping conversation before the first meeting.</div>
+            <div class="gap-value"><span class="gap-value-label qualitative">Qualitative</span> Shortens top-of-funnel sales cycle; increases perceived expertise and specificity.</div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-item-title">Standardized post-migration debrief and playbook update process</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">A structured debrief after each migration should feed new transformation rules, edge cases, and automation candidates back into the tooling and playbooks — ensuring the service improves with each delivery.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> Each captured edge case reduces QA time on the next similar migration — compounding efficiency gains over the service lifetime.</div>
+          </div>
+        </div>
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-could">Could have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Self-service migration readiness assessment tool (web-based questionnaire)</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">A short online questionnaire that helps a prospect self-identify their migration track, get a rough complexity score, and understand which tier they fall into — before contacting the team.</div>
+            <div class="gap-value"><span class="gap-value-label qualitative">Qualitative</span> Acts as a top-of-funnel lead qualification tool; reduces time spent on poorly-fitted inbound enquiries.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== PS3 ===================== -->
+  <div class="panel" id="tab-ps3">
+    <div class="service-card">
+      <div class="service-header">
+        <div class="service-num">PS#3</div>
+        <div class="service-header-text">
+          <div class="service-title">Enterprise Portal Discovery Blueprint</div>
+          <div class="service-tagline">A structured 4–6 week discovery and scoping sprint that takes a portal or CMS project from vague requirements to an execution-ready blueprint — scope agreed, architecture defined, backlog sized, budget confirmed.</div>
+          <div class="ko-row">
+            <span class="ko-badge ko-pass">KO-A Repeatable: Pass</span>
+            <span class="ko-badge ko-pass">KO-B Measurable: Pass</span>
+          </div>
+        </div>
+        <span class="verdict-badge verdict-green">Productize now</span>
+      </div>
+      <div class="inner-tabs">
+        <div class="itab active" onclick="switchInner('ps3','scope')">Scope</div>
+        <div class="itab" onclick="switchInner('ps3','deliverables')">Deliverables</div>
+        <div class="itab" onclick="switchInner('ps3','pricing')">Pricing</div>
+        <div class="itab" onclick="switchInner('ps3','assets')">Reusable Assets</div>
+        <div class="itab" onclick="switchInner('ps3','gaps')">Gaps</div>
+      </div>
+
+      <div class="inner-panel active" id="ps3-scope">
+        <div class="slabel">Scope — step by step</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Stakeholder discovery workshops:</strong> Run structured workshops with decision-makers, product owners, and technical leads to extract business goals, constraints, success criteria, and must-have vs nice-to-have features. <span class="src src-doc">Assessment Master Document – Workshop 5 / Productizing a Service Template</span></div></li>
+          <li><div class="li-content"><strong>Requirements gathering and scope definition:</strong> Consolidate workshop outputs into a structured requirements set, with clear in-scope and out-of-scope boundaries agreed in writing before the blueprint phase begins. <span class="src src-doc">Assessment Master Document – Productizing a Service Template</span></div></li>
+          <li><div class="li-content"><strong>Solution architecture design:</strong> Define the technical approach, integration map, non-functional requirements (security, performance, availability), and technology stack recommendation — with documented architectural decision records for key choices. <span class="src src-doc">Assessment Master Document – Workshop 4</span></div></li>
+          <li><div class="li-content"><strong>UX journey mapping and low-fidelity wireframing:</strong> Map end-to-end user journeys for the primary personas identified in discovery, and produce low-fidelity wireframes covering all key screens and interaction flows. <span class="src src-doc">Assessment Master Document – Productizing a Service Template</span></div></li>
+          <li><div class="li-content"><strong>Backlog creation and delivery planning:</strong> Break down the agreed scope into a prioritized, estimated backlog and produce a delivery plan with phasing, milestones, timeline, and a budget range with documented assumptions. <span class="src src-doc">Assessment Master Document – Productizing a Service Template</span></div></li>
+          <li><div class="li-content"><strong>Risk and dependency identification:</strong> Produce a RAID log (Risks, Assumptions, Issues, Dependencies) covering the full project scope, with initial mitigations documented. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Stakeholder review and blueprint sign-off:</strong> Present the full blueprint to stakeholders, incorporate feedback, and obtain formal sign-off — delivering a go/no-go decision pack that includes risks and mitigations for leadership review. <span class="src src-doc">Assessment Master Document – Productizing a Service Template</span></div></li>
+        </ul>
+        <div class="divider"></div>
+        <div class="slabel">Out of scope</div>
+        <ul class="blist">
+          <li><div class="li-content">High-fidelity design or visual branding work — the deliverable is low-fidelity wireframes, not a design system.</div></li>
+          <li><div class="li-content">Any development or implementation work — the blueprint is the output, not a working prototype.</div></li>
+          <li><div class="li-content">Procurement or vendor selection support beyond the technology stack recommendation included in the architecture document.</div></li>
+        </ul>
+      </div>
+
+      <div class="inner-panel" id="ps3-deliverables">
+        <div class="slabel">Deliverables</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Discovery Report including Software Requirements Specification (SRS):</strong> Comprehensive documentation covering project requirements, functional and non-functional specifications, technical specifications, and execution plans. <span class="src src-doc">Assessment Master Document – Productizing a Service Template</span></div></li>
+          <li><div class="li-content"><strong>Solution architecture diagram and integration map:</strong> A visual and written description of the proposed architecture, integration touchpoints, third-party dependencies, and non-functional requirement decisions — with architectural decision records for key choices. <span class="src src-doc">Assessment Master Document – Workshop 4</span></div></li>
+          <li><div class="li-content"><strong>User journey diagrams:</strong> Detailed mapping of user interactions and experiences across the primary personas identified in discovery, covering the end-to-end flow from entry to outcome. <span class="src src-doc">Assessment Master Document – Productizing a Service Template</span></div></li>
+          <li><div class="li-content"><strong>Low-fidelity wireframes:</strong> Screen-by-screen visual blueprint of all key views and interaction states, produced in the agreed design tool and shared as a link or exported file. <span class="src src-doc">Assessment Master Document – Productizing a Service Template</span></div></li>
+          <li><div class="li-content"><strong>Prioritized and estimated backlog:</strong> A structured user story map with effort estimates, priority rankings, and a documented definition of ready for each item. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Delivery plan and budget range:</strong> A phased delivery timeline with milestones, resource model, and a budget range with explicitly documented assumptions — enabling an informed go/no-go decision. <span class="src src-doc">Assessment Master Document – Productizing a Service Template</span></div></li>
+          <li><div class="li-content"><strong>RAID log:</strong> A documented register of risks, assumptions, issues, and dependencies with initial mitigation approaches. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Go/no-go decision pack:</strong> A consolidated executive-facing document summarizing scope, risks, budget, and recommended next steps — designed to support a leadership approval decision. <span class="src src-doc">Assessment Master Document – Productizing a Service Template</span></div></li>
+        </ul>
+      </div>
+
+      <div class="inner-panel" id="ps3-pricing">
+        <div class="slabel">Indicative investment</div>
+        <div class="pricing-grid">
+          <div class="pricing-box">
+            <div class="pricing-label">Timeline</div>
+            <div class="pricing-val">4–6 weeks</div>
+            <div class="pricing-note">4 weeks for well-defined projects with available stakeholders. 6 weeks for complex multi-integration or multi-persona scopes.</div>
+          </div>
+          <div class="pricing-box">
+            <div class="pricing-label">Price range</div>
+            <div class="pricing-val">€8,000 – €18,000</div>
+            <div class="pricing-note">Tiered by number of personas, integration complexity, and stakeholder availability. Define a standard scope and price add-ons explicitly.</div>
+          </div>
+        </div>
+        <div class="slabel">Recommended pricing model</div>
+        <div class="pricing-box" style="margin-top:4px">
+          <div class="model-pill">Fixed Fee — with credit toward implementation</div>
+          <div class="pricing-note" style="margin-top:10px">A fixed fee for the full discovery sprint is the cleanest model — the client knows the cost upfront, and the defined deliverables make scope creep visible and controllable. A strong differentiating mechanic: offer a partial credit of the discovery fee (e.g. 50%) against the subsequent implementation engagement. This reduces the perceived risk of the discovery investment, accelerates the decision, and creates a natural upsell path. Avoid T&M for this service — the value is in the structured output, not billable hours, and T&M undermines the "you'll know exactly what you're getting" positioning.</div>
+        </div>
+      </div>
+
+      <div class="inner-panel" id="ps3-assets">
+        <div class="slabel">Reusable assets — from client documents</div>
+        <div class="asset-item"><div class="asset-dot asset-dot-doc"></div><div class="asset-text"><strong>Productized Service Template (full structure)</strong> — Provides the complete framework for scoping, defining deliverables, inputs, team profiles, timelines, and pricing for any discovery engagement. <span class="src src-doc">Assessment Master Document – Productizing a Service Template</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-doc"></div><div class="asset-text"><strong>Workshop structure and agenda templates</strong> — Workshop 2 (skills/team), Workshop 3 (projects/pricing), Workshop 4 (tech stack), and Workshop 5 (niche/productized services) provide repeatable discovery formats adaptable to client-facing engagements. <span class="src src-doc">Assessment Master Document – Workshops 2–5</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-doc"></div><div class="asset-text"><strong>Niche definition and customer profile framework</strong> — Workshop 5 provides a repeatable structure for defining the buyer, their pain, trigger events, objections, and success criteria — directly applicable to discovery scoping. <span class="src src-doc">Assessment Master Document – Workshop 5</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-doc"></div><div class="asset-text"><strong>Client onboarding and inputs checklist</strong> — The pre-workshop checklist from the Assessment Master Document provides a reusable structure for defining what access, data, and stakeholder availability is needed before the sprint begins. <span class="src src-doc">Assessment Master Document – Pre-workshop Checklist</span></div></div>
+      </div>
+
+      <div class="inner-panel" id="ps3-gaps">
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-must">Must have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Finalized pricing — the template currently shows "XXXX EUR"</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">The pricing placeholder must be replaced with a real, defensible number before this service can be marketed. Without a stated price, the service cannot be productized — it becomes a custom quote every time.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> A fixed price removes 2–4 weeks of back-and-forth negotiation from the average sales cycle. At 10 deals per year, that is 20–40 weeks of reclaimed sales capacity.</div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-item-title">At least one delivered reference project with a named outcome</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">The discovery service must be backed by at least one real delivery where the blueprint was followed by an implementation. Without a reference, the "blueprint your team can execute immediately" promise is unproven.</div>
+            <div class="gap-value"><span class="gap-value-label qualitative">Qualitative</span> A single reference delivery is the difference between a service candidate and a productized offer. It also provides the testimonial content needed for the sales collateral.</div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-item-title">SRS/Discovery report template and wireframe library finalized as reusable assets</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">The "templates and accelerators" section of the service description references these assets, but they are not yet documented in the reusable asset inventory. They must be built and documented before the service can be delivered repeatably by any qualified team member.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> A reusable SRS template reduces the senior BA's documentation effort by an estimated 30–40% per engagement — directly protecting the margin on a fixed-fee service.</div>
+          </div>
+        </div>
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-should">Should have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Team profile validation — confirm BA + Architect + UX availability as a repeatable unit</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">The service requires a Senior BA, Solution Architect, UX/UI Designer, and PM. This team profile must be validated as available and bookable for discovery sprints without cannibalizing delivery capacity on other projects.</div>
+            <div class="gap-value"><span class="gap-value-label qualitative">Qualitative</span> Capacity constraints on discovery team members are the most common reason this type of service stalls after productization — validate before going to market.</div>
+          </div>
+        </div>
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-could">Could have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Discovery-to-implementation credit mechanic formally documented in the service terms</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">Formalizing a 50% fee credit toward the subsequent implementation engagement in the service agreement strengthens the upsell path and reduces buyer hesitation at the discovery stage.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> A credit mechanic increases discovery-to-implementation conversion rate — the baseline to measure against once the service is live.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== PS5 ===================== -->
+  <div class="panel" id="tab-ps5">
+    <div class="service-card">
+      <div class="service-header">
+        <div class="service-num">PS#5</div>
+        <div class="service-header-text">
+          <div class="service-title">CMS Health Check & Modernization Roadmap</div>
+          <div class="service-tagline">A rapid 1.5–2 week audit of an existing Sitefinity implementation — technical debt scoring, upgrade vs migration decision, SaaS readiness assessment, and a prioritized modernization roadmap. Best positioned as the entry point to PS#1 or PS#2.</div>
+          <div class="ko-row">
+            <span class="ko-badge ko-part">KO-A Repeatable: Partial</span>
+            <span class="ko-badge ko-part">KO-B Measurable: Partial</span>
+          </div>
+        </div>
+        <span class="verdict-badge verdict-amber">Build moat first</span>
+      </div>
+      <div class="inner-tabs">
+        <div class="itab active" onclick="switchInner('ps5','scope')">Scope</div>
+        <div class="itab" onclick="switchInner('ps5','deliverables')">Deliverables</div>
+        <div class="itab" onclick="switchInner('ps5','pricing')">Pricing</div>
+        <div class="itab" onclick="switchInner('ps5','assets')">Reusable Assets</div>
+        <div class="itab" onclick="switchInner('ps5','gaps')">Gaps</div>
+      </div>
+
+      <div class="inner-panel active" id="ps5-scope">
+        <div class="slabel">Scope — step by step</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Legacy solution discovery and structural analysis:</strong> Use the Sitefinity Migration Analyzer to inspect the existing implementation — content model, component patterns, customizations, and integration landscape — without requiring access to source code initially. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Technical debt scoring:</strong> Score the implementation against a standardized rubric covering code quality, deprecated API usage, customization coupling, upgrade compatibility, and SaaS readiness — producing a quantified debt score that makes the conversation with leadership concrete and actionable. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Integration and dependency audit:</strong> Identify all third-party integrations, their upgrade compatibility status, and any integration patterns that would need to be rebuilt for a SaaS migration. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Upgrade vs migration decision analysis:</strong> Evaluate whether the current implementation is best addressed via a version upgrade (PS#1), a migration/modernization (PS#2), or a phased combination — with a documented rationale and effort comparison. <span class="src src-asset">Reusable Assets – Upgrade Projects / Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>SaaS readiness assessment:</strong> Evaluate whether the current implementation is compatible with a move to Sitefinity SaaS, and identify the specific blockers (extension patterns, integration constraints, custom modules) that would need to be resolved. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Prioritized modernization roadmap:</strong> Produce a sequenced, effort-estimated roadmap of modernization initiatives — distinguishing quick wins from longer-term investments, and mapping each initiative to business value. <span class="src src-gen">Recommended</span></div></li>
+        </ul>
+        <div class="divider"></div>
+        <div class="slabel">Out of scope</div>
+        <ul class="blist">
+          <li><div class="li-content">Any implementation work — this is an audit and roadmap service only.</div></li>
+          <li><div class="li-content">Performance testing or load testing — flagged as a potential follow-on engagement if required.</div></li>
+        </ul>
+      </div>
+
+      <div class="inner-panel" id="ps5-deliverables">
+        <div class="slabel">Deliverables</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Health check report:</strong> A structured written report covering the current state of the Sitefinity implementation, identified issues, integration dependencies, and key findings from the discovery phase. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Technical debt scorecard:</strong> A quantified scoring of the implementation's technical debt across defined dimensions, presented in a format suitable for sharing with both technical and non-technical stakeholders. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Upgrade vs migration recommendation:</strong> A written recommendation with documented rationale, covering the pros, cons, risks, and rough effort comparison of each path — enabling an informed decision by the client's leadership. <span class="src src-asset">Reusable Assets – Upgrade Projects / Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>SaaS readiness assessment summary:</strong> A clear statement of the current SaaS readiness level, the specific blockers identified, and the effort required to resolve them. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+          <li><div class="li-content"><strong>Prioritized modernization roadmap:</strong> A sequenced roadmap with initiative descriptions, effort estimates, business value mapping, and a recommended phasing — formatted for both a technical audience and a leadership review. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Legacy component assessment matrix:</strong> For implementations with significant custom development, a matrix identifying reusable, rebuildable, and retirable components. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></li>
+        </ul>
+      </div>
+
+      <div class="inner-panel" id="ps5-pricing">
+        <div class="slabel">Indicative investment</div>
+        <div class="pricing-grid">
+          <div class="pricing-box">
+            <div class="pricing-label">Timeline</div>
+            <div class="pricing-val">1.5–2 weeks</div>
+            <div class="pricing-note">Short enough to be low-risk for the client; long enough to produce a substantive, defensible output.</div>
+          </div>
+          <div class="pricing-box">
+            <div class="pricing-label">Price range</div>
+            <div class="pricing-val">€3,500 – €7,000</div>
+            <div class="pricing-note">Positioned as a low-risk entry point. Consider crediting the fee against PS#1 or PS#2 when the client proceeds.</div>
+          </div>
+        </div>
+        <div class="slabel">Recommended pricing model</div>
+        <div class="pricing-box" style="margin-top:4px">
+          <div class="model-pill">Fixed Fee — with credit toward PS#1 or PS#2</div>
+          <div class="pricing-note" style="margin-top:10px">A fixed fee makes this a trivially easy purchasing decision for the client — no budget approval process, no procurement complexity. The credit mechanic (apply 50–100% of the health check fee toward the subsequent upgrade or migration engagement) turns a cost into a deposit, dramatically increasing conversion to the next service. This is the most important pricing mechanic in the portfolio for building pipeline: a well-run health check almost always surfaces a clear path to PS#1 or PS#2.</div>
+        </div>
+      </div>
+
+      <div class="inner-panel" id="ps5-assets">
+        <div class="slabel">Reusable assets — from client documents</div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Sitefinity Migration Analyzer</strong> — The primary discovery tool for the health check; provides structural analysis and migration readiness insights without requiring full source code access upfront. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Legacy component inventory checklists</strong> — Reusable checklist for cataloguing existing custom widgets, modules, and integrations during the discovery phase. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Pre-upgrade technical assessment framework</strong> — Provides the starting structure for the upgrade compatibility and version risk analysis portion of the health check. <span class="src src-asset">Reusable Assets – Upgrade Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Reimplementation planning matrices</strong> — For implementations where legacy code analysis reveals components that must be rebuilt, these matrices structure the scope and effort conversation. <span class="src src-asset">Reusable Assets – Migration Projects</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-doc"></div><div class="asset-text"><strong>Tech stack assessment framework</strong> — Workshop 4 of the Assessment Master Document provides a structured approach to categorizing the tech stack (preferred / comfortable / not ideal / out of scope) that can be adapted for client-facing health checks. <span class="src src-doc">Assessment Master Document – Workshop 4</span></div></div>
+      </div>
+
+      <div class="inner-panel" id="ps5-gaps">
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-must">Must have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Standardized assessment format and technical debt scoring rubric</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">Currently, Knock-out A (repeatable at scale) is Partial because the assessment depends on the individual consultant's judgment. A standardized rubric — with defined scoring dimensions and point values — is required before any senior consultant can deliver this service without the original author involved.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> A standardized rubric reduces delivery preparation time per engagement by an estimated 40–50% and eliminates the key-person dependency that blocks scaling this service.</div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-item-title">Documented health check report template with defined output sections</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">The deliverable (health check report, technical debt scorecard, modernization roadmap) must be templated so the output is consistent across deliveries. Without a template, the Knock-out B (measurable outcome) remains Partial because there is no standard way to present and compare results.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> A consistent report format enables the team to build a benchmark database of debt scores across clients — which itself becomes a competitive asset ("our clients average X, industry benchmark is Y").</div>
+          </div>
+        </div>
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-should">Should have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Credit mechanic formally linked to PS#1 and PS#2 in the service terms</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">The health check's primary commercial purpose is to qualify and convert clients into upgrade or migration engagements. This upsell path must be explicitly designed into the service — not left to the salesperson to figure out after delivery.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> The target conversion rate from health check to PS#1 or PS#2 should be set and tracked from the first delivery — this is the primary KPI for the service.</div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-item-title">At least 2 delivered health checks before declaring the service productized</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">Per the Decision Framework's readiness methodology, the service must be validated with at least one real delivery before it enters the productized portfolio. Two deliveries are recommended here specifically because the rubric and template will need refinement after the first run.</div>
+            <div class="gap-value"><span class="gap-value-label qualitative">Qualitative</span> Validates the scoring rubric and report template against real implementations — essential before positioning this as a standardized service.</div>
+          </div>
+        </div>
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-could">Could have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Benchmark database of health check scores across client implementations</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">After 5–10 deliveries, anonymized benchmark data ("the average Sitefinity implementation we audit scores X on technical debt") becomes a marketing asset and a trust-builder in sales conversations.</div>
+            <div class="gap-value"><span class="gap-value-label qualitative">Qualitative</span> Positions the team as a specialist authority on Sitefinity implementation health — a defensibility factor that compounds over time.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== PS6 Multilingual ===================== -->
+  <div class="panel" id="tab-ps6">
+    <div class="service-card">
+      <div class="service-header">
+        <div class="service-num">PS#6</div>
+        <div class="service-header-text">
+          <div class="service-title">AI-Powered Multilingual Portal Accelerator</div>
+          <div class="service-tagline">Proprietary multilingual management tooling — built by the client, owned by the end customer — that reduces the time to add a new language from days to minutes. One-time implementation; no SaaS fees, no vendor lock-in, client owns the AI account and all data.</div>
+          <div class="ko-row">
+            <span class="ko-badge ko-pass">KO-A Repeatable: Pass</span>
+            <span class="ko-badge ko-part">KO-B Measurable: Partial → Pass (once delivery is documented)</span>
+          </div>
+        </div>
+        <span class="verdict-badge verdict-amber">Build moat first</span>
+      </div>
+      <div class="inner-tabs">
+        <div class="itab active" onclick="switchInner('ps6','scope')">Scope</div>
+        <div class="itab" onclick="switchInner('ps6','deliverables')">Deliverables</div>
+        <div class="itab" onclick="switchInner('ps6','pricing')">Pricing</div>
+        <div class="itab" onclick="switchInner('ps6','assets')">Reusable Assets</div>
+        <div class="itab" onclick="switchInner('ps6','gaps')">Gaps</div>
+      </div>
+
+      <div class="inner-panel active" id="ps6-scope">
+        <div class="slabel">Two delivery tracks</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Track A — New implementation:</strong> The multilingual tool is integrated as part of the initial portal setup. The implementation effort is equivalent to a standard multilingual implementation, but from the moment it is live, adding a new language takes minutes instead of days. <span class="src src-gen">Provided by client</span></div></li>
+          <li><div class="li-content"><strong>Track B — Migration from existing multilingual setup:</strong> For portals that already have multilingual support implemented traditionally, migrating to the tool takes approximately the same time as adding one additional language using the traditional approach. The ROI on future language additions begins immediately after migration. <span class="src src-gen">Provided by client</span></div></li>
+        </ul>
+        <div class="slabel" style="margin-top:18px">Scope — Track A (new implementation)</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Requirements and language scope definition:</strong> Agree the initial set of languages, content types to be translated, and the validation workflow with the client's editorial team — documenting what "approved translation" means for sign-off purposes. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Client AI account setup and integration:</strong> Connect the tool to the client's own AI provider account (not the client's end-users' data or the agency's account) — ensuring the client owns all translation data, API usage, and costs from day one. <span class="src src-gen">Provided by client</span></div></li>
+          <li><div class="li-content"><strong>Tool installation and portal integration:</strong> Install and configure the multilingual management tool within the portal environment, covering content type mapping, translation workflow setup, and editorial validation interface. <span class="src src-gen">Provided by client</span></div></li>
+          <li><div class="li-content"><strong>Editorial validation training:</strong> Train the client's editorial team on the AI-assisted translation review workflow — how to review AI suggestions, approve, edit, and publish translated content. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Initial language rollout and QA:</strong> Deliver the first language addition using the tool, validate translation quality with the client's editorial team, and document the time-to-publish baseline for future language additions. <span class="src src-gen">Recommended</span></div></li>
+        </ul>
+        <div class="slabel" style="margin-top:18px">Scope — Track B (migration from existing multilingual)</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Existing multilingual implementation assessment:</strong> Review the current multilingual setup to understand content model, translation storage, and workflow — defining the migration path to the new tool. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Migration execution:</strong> Migrate the existing multilingual configuration to the tool, preserving existing translations and ensuring no content is lost or broken during the transition. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Validation and editorial handover:</strong> Validate migrated translations, train the editorial team on the new workflow, and document the post-migration time-to-add-language baseline. <span class="src src-gen">Recommended</span></div></li>
+        </ul>
+      </div>
+
+      <div class="inner-panel" id="ps6-deliverables">
+        <div class="slabel">Deliverables</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Configured multilingual tool integrated into the client's portal:</strong> A fully operational installation of the proprietary multilingual management system, connected to the client's AI account and ready for editorial use. <span class="src src-gen">Provided by client</span></div></li>
+          <li><div class="li-content"><strong>Language and content type configuration documentation:</strong> A written record of which languages are configured, which content types are covered, and the translation validation workflow as agreed with the client. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Editorial team training materials and workflow guide:</strong> A concise guide (document or video walkthrough) explaining the AI translation review workflow, approval process, and how to trigger a new language addition. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Time-to-add-language baseline report:</strong> A documented measurement of the time taken to add the first language after implementation — establishing the before/after benchmark for the service's core value claim. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Client AI account ownership confirmation:</strong> Documentation confirming the client's AI account is connected, the client owns all usage and data, and there are no ongoing licensing or subscription obligations to the agency. <span class="src src-gen">Provided by client</span></div></li>
+        </ul>
+      </div>
+
+      <div class="inner-panel" id="ps6-pricing">
+        <div class="slabel">Indicative investment</div>
+        <div class="pricing-grid">
+          <div class="pricing-box">
+            <div class="pricing-label">Timeline</div>
+            <div class="pricing-val">1–2 weeks</div>
+            <div class="pricing-note">Track A (new setup): ~1 week. Track B (migration): ~1–1.5 weeks. The setup time is comparable to a standard multilingual implementation.</div>
+          </div>
+          <div class="pricing-box">
+            <div class="pricing-label">Price range</div>
+            <div class="pricing-val">€4,000 – €10,000</div>
+            <div class="pricing-note">Priced as a one-time implementation fee. The client's ongoing cost is only their own AI provider usage — no agency subscription or license.</div>
+          </div>
+        </div>
+        <div class="slabel">Recommended pricing model</div>
+        <div class="pricing-box" style="margin-top:4px">
+          <div class="model-pill">Fixed Implementation Fee — No Ongoing License</div>
+          <div class="pricing-note" style="margin-top:10px">The "no SaaS, no license, client owns everything" angle is the single strongest differentiator of this service — price it to reflect that. A one-time fixed fee for implementation, with the client's only ongoing cost being their own AI API usage (which they control and own), is a fundamentally different commercial proposition to any SaaS multilingual tool. Consider positioning the fee as roughly equivalent to the cost of manually adding 2–3 languages the traditional way — making the ROI self-evident from the first additional language. Do not introduce a retainer or support subscription as the primary model; it undermines the ownership positioning. A separate optional support agreement for editorial training or additional language adds can be offered as an add-on.</div>
+        </div>
+      </div>
+
+      <div class="inner-panel" id="ps6-assets">
+        <div class="slabel">Reusable assets — from client documents</div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>Proprietary AI-powered multilingual management tool</strong> — Client-built, client-owned IP. Manages the full technical implementation of multilingual support including AI translation integration, validation workflow, and language addition automation. <span class="src src-gen">Client-built proprietary IP (founder-led development)</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-asset"></div><div class="asset-text"><strong>AI provider integration layer</strong> — The integration connects to the end-client's own AI account, not a shared or agency-owned API — ensuring data ownership and eliminating ongoing license cost. <span class="src src-gen">Client-built proprietary IP</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-doc"></div><div class="asset-text"><strong>Reusable asset documentation framework</strong> — The structure from the Assessment Master Document (what it does, when used, effort saved, assumptions, maturity) should be applied to formally document this tool as a reusable asset. <span class="src src-doc">Assessment Master Document – Workshop 4</span></div></div>
+      </div>
+
+      <div class="inner-panel" id="ps6-gaps">
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-must">Must have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Formal documentation of the tool as a reusable asset (what it does, maturity, dependencies, effort saved)</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">Currently this tool lives with the founding team and has not been formally documented as a reusable asset. Any other team member delivering this service would need the documentation to do so without the founder's involvement. This is the key-person dependency that blocks productization.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> Without documentation, this service cannot be delivered by anyone other than the founder — limiting capacity to 1 concurrent delivery and creating a single point of failure.</div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-item-title">Documented time-to-add-language measurement from the first real delivery</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">The core value claim — "adding a language takes minutes, not days" — needs a real, timestamped measurement from a delivered project. Without this number, the claim is marketing copy, not a provable differentiator.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> "Minutes vs days" is a strong enough claim to anchor the entire pricing conversation — but only once it is backed by real data. A documented 15-minute language addition vs a traditional 5-day effort is worth €3,000–€5,000 per language to a mid-size enterprise.</div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-item-title">Confirm the number of delivered client implementations and gather reference data</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">The tool has been delivered to at least one client — possibly more. All delivered instances need to be identified and their data (languages added, time savings, client feedback) captured before the service is positioned externally.</div>
+            <div class="gap-value"><span class="gap-value-label qualitative">Qualitative</span> Each confirmed delivery adds credibility; even one anonymized case study with a timing benchmark moves this from "concept" to "proven service."</div>
+          </div>
+        </div>
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-should">Should have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Editorial validation workflow guide and training materials (reusable across clients)</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">Each client's editorial team needs to be onboarded to the AI review workflow. A reusable training guide (with screenshots or a short video) eliminates the need to create this from scratch for each engagement and reduces onboarding time.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> Estimated 3–5 hours saved per delivery on editorial onboarding — directly protects margin on a fixed-fee engagement.</div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-item-title">Compatibility matrix defining which portal/CMS stacks the tool supports</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">For the service to be sold to portal clients regardless of tech stack (as intended), it must be clear which stacks the tool is compatible with today and which would require adaptation effort.</div>
+            <div class="gap-value"><span class="gap-value-label qualitative">Qualitative</span> Prevents selling the service into an incompatible project and then discovering the gap mid-delivery.</div>
+          </div>
+        </div>
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-could">Could have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">AI provider agnosticism — document whether the tool works with OpenAI, Azure OpenAI, Anthropic, and others</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">Enterprise clients (especially in banking and financial services) may have a preferred or mandated AI provider. Documenting which providers are supported — and which require additional integration effort — broadens the addressable market for this service.</div>
+            <div class="gap-value"><span class="gap-value-label qualitative">Qualitative</span> Particularly relevant for regulated industries where AI provider selection is a compliance and data governance decision, not a technical preference.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== PS7 Cloud Optimization ===================== -->
+  <div class="panel" id="tab-ps7">
+    <div class="service-card">
+      <div class="service-header">
+        <div class="service-num">PS#7</div>
+        <div class="service-header-text">
+          <div class="service-title">Cloud Cost Optimization Audit</div>
+          <div class="service-tagline">A structured 2–3 week audit of a client's cloud infrastructure (AWS, Azure, GCP) — identifying measurable cost savings, right-sizing opportunities, and waste — delivered both as a standalone service and as an embedded track within portal/CMS implementations. The client pays from money they would not otherwise have kept.</div>
+          <div class="ko-row">
+            <span class="ko-badge ko-pass">KO-A Repeatable: Pass</span>
+            <span class="ko-badge ko-pass">KO-B Measurable: Pass</span>
+          </div>
+        </div>
+        <span class="verdict-badge verdict-green">Productize now</span>
+      </div>
+      <div class="inner-tabs">
+        <div class="itab active" onclick="switchInner('ps7','scope')">Scope</div>
+        <div class="itab" onclick="switchInner('ps7','deliverables')">Deliverables</div>
+        <div class="itab" onclick="switchInner('ps7','pricing')">Pricing</div>
+        <div class="itab" onclick="switchInner('ps7','assets')">Reusable Assets</div>
+        <div class="itab" onclick="switchInner('ps7','gaps')">Gaps</div>
+      </div>
+
+      <div class="inner-panel active" id="ps7-scope">
+        <div class="slabel">Two service modes</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Standalone audit:</strong> An independent cloud cost optimization engagement for any client running workloads on AWS, Azure, or GCP — regardless of whether they are a portal/CMS client. Entry point for new client relationships. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Embedded audit (within a portal/CMS project):</strong> For clients whose portal or CMS is already running on cloud infrastructure, the audit is run as a parallel workstream within a migration, modernization, or SaaS transformation engagement — specifically evaluating the cloud footprint of the portal infrastructure and identifying savings that can be realized as part of the modernization. <span class="src src-gen">Recommended</span></div></li>
+        </ul>
+        <div class="slabel" style="margin-top:18px">Scope — standalone and embedded</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Cloud environment inventory and access setup:</strong> Establish read-only access to the client's cloud accounts (AWS Cost Explorer, Azure Cost Management, GCP Billing) and produce an inventory of active services, regions, and resource types. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Cost baseline and spend analysis:</strong> Analyze the last 3–6 months of cloud spend by service, region, and team — identifying the top cost drivers and establishing a documented baseline against which savings will be measured. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Waste and over-provisioning identification:</strong> Identify idle or underutilized resources (unattached volumes, stopped instances, oversized compute), orphaned services, unused reserved capacity, and misconfigured auto-scaling policies. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Right-sizing and commitment analysis:</strong> Evaluate current compute sizing against actual utilization data and model the savings available from right-sizing, reserved instances, savings plans, or committed use discounts. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Architecture-level optimization opportunities:</strong> Identify structural opportunities such as storage tier optimization, data transfer cost reduction, CDN consolidation, and licensing optimization (e.g. license-included vs BYOL). <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Prioritized savings roadmap with implementation effort estimates:</strong> Rank identified savings opportunities by annual savings value vs implementation effort, producing an actionable roadmap the client's team can execute — or that the agency can deliver as a follow-on engagement. <span class="src src-gen">Recommended</span></div></li>
+        </ul>
+        <div class="divider"></div>
+        <div class="slabel">Out of scope</div>
+        <ul class="blist">
+          <li><div class="li-content">Implementation of the identified optimizations — quoted separately as an optional follow-on engagement.</div></li>
+          <li><div class="li-content">Security or compliance audit — a separate workstream, though security misconfigurations that impact cost (e.g. unintended data egress) are flagged.</div></li>
+          <li><div class="li-content">FinOps process design or ongoing cloud cost governance — available as a retainer add-on.</div></li>
+        </ul>
+      </div>
+
+      <div class="inner-panel" id="ps7-deliverables">
+        <div class="slabel">Deliverables</div>
+        <ul class="blist">
+          <li><div class="li-content"><strong>Cloud cost baseline report:</strong> A documented snapshot of the current monthly and annual cloud spend by service and region, establishing the baseline against which all identified savings are measured. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Waste and over-provisioning findings register:</strong> A structured list of identified waste items — each with the resource type, current cost, estimated savings, and recommended action. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Right-sizing and commitment model:</strong> A quantified analysis of right-sizing opportunities and commitment-based pricing options (reserved instances, savings plans, CUDs) with projected annual savings for each. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Prioritized savings roadmap:</strong> A ranked list of optimization opportunities ordered by annual savings value and implementation complexity, with effort estimates for each — designed for a CFO-level conversation as well as a technical implementation team. <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Total identified savings summary:</strong> A single-page executive summary quantifying the total annual savings identified, broken down by quick wins (0–30 days), medium-term (30–90 days), and strategic (90+ days). <span class="src src-gen">Recommended</span></div></li>
+          <li><div class="li-content"><strong>Implementation engagement proposal (optional):</strong> If the client wishes to proceed with implementing the identified savings, a scoped proposal for the follow-on implementation engagement is included. <span class="src src-gen">Recommended</span></div></li>
+        </ul>
+      </div>
+
+      <div class="inner-panel" id="ps7-pricing">
+        <div class="slabel">Indicative investment</div>
+        <div class="pricing-grid">
+          <div class="pricing-box">
+            <div class="pricing-label">Timeline</div>
+            <div class="pricing-val">2–3 weeks</div>
+            <div class="pricing-note">Standalone: 2–3 weeks. Embedded within a portal project: typically 3–5 days of parallel effort, not a separate timeline.</div>
+          </div>
+          <div class="pricing-box">
+            <div class="pricing-label">Price range</div>
+            <div class="pricing-val">€4,500 – €12,000 (standalone)</div>
+            <div class="pricing-note">Embedded track: €2,000–€4,000 as an add-on to a PS#2 or PS#3 engagement. The ROI is almost always measured in multiples of the audit fee.</div>
+          </div>
+        </div>
+        <div class="slabel">Recommended pricing model</div>
+        <div class="pricing-box" style="margin-top:4px">
+          <div class="model-pill">Fixed Fee Audit + Optional Gain-Share on Implementation</div>
+          <div class="pricing-note" style="margin-top:10px">Two-stage model: (1) Fixed fee for the audit — this removes any budget friction, is easy to approve, and sets up the gain-share conversation. (2) If the client engages the agency to implement the identified savings, offer an optional gain-share pricing track on the implementation fee — e.g. 20–25% of documented annual savings achieved in the first 12 months, paid monthly from the savings realized. This is the strongest pricing model for this service because the client pays from money they would not otherwise have kept, and the agency's upside is tied directly to results. Per the Decision Framework (Part 7), three things must be defined before agreeing gain-share: the baseline (agreed upfront from the audit), the attribution window (12 months), and the measurement method (cloud provider billing reports). The fixed-fee audit already produces the baseline — making the gain-share mechanic unusually clean for this service compared to most.</div>
+        </div>
+      </div>
+
+      <div class="inner-panel" id="ps7-assets">
+        <div class="slabel">Reusable assets — from client documents</div>
+        <div class="asset-item"><div class="asset-dot asset-dot-doc"></div><div class="asset-text"><strong>Reusable CI/CD pipeline setups (AWS and Azure)</strong> — The existing reusable DevOps assets referenced in Workshop 4 provide a foundation for understanding and auditing cloud environment architecture as part of the optimization review. <span class="src src-doc">Assessment Master Document – Workshop 4</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-doc"></div><div class="asset-text"><strong>Security and compliance standards framework</strong> — The security and compliance standards documented in Workshop 4 provide the lens through which cloud misconfigurations with cost implications (e.g. unintended data egress, oversized security groups) are identified. <span class="src src-doc">Assessment Master Document – Workshop 4</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-doc"></div><div class="asset-text"><strong>Known delivery risks framework</strong> — The risk identification structure from Workshop 4 (technology gaps, estimation issues) is adaptable to the cloud audit's risk and findings documentation. <span class="src src-doc">Assessment Master Document – Workshop 4</span></div></div>
+        <div class="slabel" style="margin-top:16px">Assets to be built (not yet in inventory)</div>
+        <div class="asset-item"><div class="asset-dot asset-dot-gen"></div><div class="asset-text"><strong>Cloud cost audit checklist (AWS / Azure / GCP)</strong> — A standardized, platform-specific checklist covering all audit dimensions: waste, right-sizing, commitments, architecture, and licensing. Must be built and validated before the service can be delivered repeatably. <span class="src src-gen">To be created</span></div></div>
+        <div class="asset-item"><div class="asset-dot asset-dot-gen"></div><div class="asset-text"><strong>Savings roadmap template and executive summary format</strong> — A reusable report template for the prioritized savings roadmap and CFO-facing executive summary, ensuring consistent output quality across deliveries. <span class="src src-gen">To be created</span></div></div>
+      </div>
+
+      <div class="inner-panel" id="ps7-gaps">
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-must">Must have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Standardized cloud audit checklist per platform (AWS, Azure, GCP)</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">The client has delivered cloud audits as standalone work, which confirms the expertise exists. However, for the service to be repeatable by any qualified team member (not just the individual who ran previous audits), the methodology must be captured in a structured, platform-specific checklist.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> Without a checklist, the service depends on individual judgment — limiting delivery capacity and making quality inconsistent. A checklist is also a defensibility asset: it demonstrates methodology to a prospect during the sales conversation.</div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-item-title">Documented savings from at least one prior cloud audit engagement</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">The client has done cloud audits as standalone work. The specific savings identified and (if implemented) realized from those engagements must be captured and (where possible) authorized for use as anonymized case study material.</div>
+            <div class="gap-value"><span class="gap-value-label money">€€</span> A documented example of identifying €80,000 in annual savings on a €6,000 audit fee is a 13x ROI story. This single data point is sufficient to sell this service to a CFO without further qualification.</div>
+          </div>
+        </div>
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-should">Should have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Gain-share terms template and baseline agreement document</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">Per the Decision Framework Part 7, gain-share pricing requires three pre-agreed elements: baseline, attribution window, and measurement method. A template agreement covering all three must exist before the gain-share pricing track can be offered without legal risk.</div>
+            <div class="gap-value"><span class="gap-value-label qualitative">Qualitative</span> Without a clear template, gain-share negotiations become custom legal work — negating the speed advantage of the productized service.</div>
+          </div>
+          <div class="gap-item">
+            <div class="gap-item-title">Embedded audit scope definition for portal/CMS projects</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">The embedded version of this service (running as a parallel track within a PS#2 migration) needs a defined scope and effort estimate that fits within the migration engagement without expanding the overall timeline. This must be documented as a standard add-on to PS#2 and PS#3.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> Adding a €2,000–€4,000 embedded audit to a €20,000 migration engagement increases deal value by 10–20% with minimal additional sales effort.</div>
+          </div>
+        </div>
+        <div class="gap-bucket">
+          <span class="bucket-label bucket-could">Could have</span>
+          <div class="gap-item">
+            <div class="gap-item-title">Ongoing cloud cost governance retainer (post-audit)</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6">A monthly retainer covering ongoing cost monitoring, alerting, and quarterly optimization reviews — converting a one-time audit into a recurring revenue relationship. This is a natural continuity-pull product after the initial audit.</div>
+            <div class="gap-value"><span class="gap-value-label measurable">Measurable</span> A €1,500–€3,000/month retainer on even 3 clients generates €54,000–€108,000 in predictable annual revenue — significant for a small agency's revenue mix.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== PS4 ENGINES ===================== -->
+  <div class="panel" id="tab-ps4">
+    <div class="service-card">
+      <div class="service-header">
+        <div class="service-num">PS#4</div>
+        <div class="service-header-text">
+          <div class="service-title">Pre-Built Portal Engines</div>
+          <div class="service-tagline">A curated set of production-ready, tech-stack-agnostic functional modules that can be integrated into any enterprise portal project — reducing engineering time on complex, recurring portal requirements by weeks per engagement.</div>
+        </div>
+        <span class="verdict-badge verdict-amber">Build moat first</span>
+      </div>
+      <div style="padding: 24px 28px;">
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:20px;line-height:1.7">These are not separate productized services — they are <strong>add-on accelerators</strong> that increase deal value and delivery speed within any portal engagement (PS#1–3). Each engine is a documented, reusable functional module. Below are the 5 strongest candidates based on frequency of need in enterprise portal projects, complexity that justifies pre-building, and alignment with the client's confirmed expertise.</p>
+        <div class="engine-grid">
+
+          <div class="engine-card">
+            <div class="engine-num">ENGINE 01</div>
+            <div class="engine-title">Dynamic Scheduling & Appointment Engine</div>
+            <div class="engine-desc">Rule-based availability generation (RRULE), exception handling (leaves/holidays), occupancy overlay, timezone normalization, and iCal export. Saves 3–5 weeks of senior engineering time per portal requiring booking or scheduling logic — doctor/patient portals, resource reservation, facility management, service booking.</div>
+            <div class="engine-tags">
+              <span class="etag etag-green">High maturity</span>
+              <span class="etag etag-blue">Battle-tested</span>
+              <span class="etag etag-amber">3–5 weeks saved</span>
+            </div>
+          </div>
+
+          <div class="engine-card">
+            <div class="engine-num">ENGINE 02</div>
+            <div class="engine-title">Role-Based Access & Permissions Engine</div>
+            <div class="engine-desc">A configurable RBAC (Role-Based Access Control) module covering user roles, permission sets, resource-level access rules, and audit logging. Enterprise portals almost universally require granular access control — building it from scratch on each project is a significant and avoidable cost. Includes SSO integration patterns (SAML, OIDC) and multi-tenant isolation where required.</div>
+            <div class="engine-tags">
+              <span class="etag etag-blue">Universal need</span>
+              <span class="etag etag-amber">2–4 weeks saved</span>
+              <span class="etag etag-purple">Compliance-relevant</span>
+            </div>
+          </div>
+
+          <div class="engine-card">
+            <div class="engine-num">ENGINE 03</div>
+            <div class="engine-title">Notification & Alerting Engine</div>
+            <div class="engine-desc">A configurable multi-channel notification system covering email, SMS, in-app notifications, and webhook events — with template management, delivery status tracking, retry logic, and user preference management. Portal users universally expect transactional and event-driven notifications; building this well (with delivery guarantees, unsubscribe handling, and audit trails) takes 2–3 weeks when done from scratch.</div>
+            <div class="engine-tags">
+              <span class="etag etag-blue">Universal need</span>
+              <span class="etag etag-amber">2–3 weeks saved</span>
+              <span class="etag etag-green">Reusable templates</span>
+            </div>
+          </div>
+
+          <div class="engine-card">
+            <div class="engine-num">ENGINE 04</div>
+            <div class="engine-title">Document Management & Secure File Handling Engine</div>
+            <div class="engine-desc">A structured document upload, storage, versioning, and access-controlled retrieval module. Covers virus scanning on upload, metadata tagging, version history, expiry and retention policies, and secure signed URL generation for time-limited downloads. Particularly relevant for financial services, insurance, and real estate portals where document handling is a core workflow — and where compliance requirements (GDPR, data retention) add complexity.</div>
+            <div class="engine-tags">
+              <span class="etag etag-purple">Compliance-critical</span>
+              <span class="etag etag-amber">3–4 weeks saved</span>
+              <span class="etag etag-blue">FinServ / RealEstate fit</span>
+            </div>
+          </div>
+
+          <div class="engine-card">
+            <div class="engine-num">ENGINE 05</div>
+            <div class="engine-title">Reporting & Data Export Engine</div>
+            <div class="engine-desc">A configurable reporting module that enables portal administrators and end-users to generate, filter, schedule, and export structured data reports (CSV, Excel, PDF) from portal data — without requiring custom development for each report type. Includes a report template system, scheduled delivery (email or SFTP), and a filter/aggregation builder. Enterprise portal clients almost always need reporting capability; this engine makes it a configuration task, not an engineering task.</div>
+            <div class="engine-tags">
+              <span class="etag etag-blue">Admin & ops need</span>
+              <span class="etag etag-amber">2–3 weeks saved</span>
+              <span class="etag etag-green">Config over code</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:24px;padding:16px 18px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;">
+          <div class="slabel" style="margin-top:0">How to position and price these engines</div>
+          <ul class="blist" style="margin-top:8px">
+            <li><div class="li-content">Position engines as <strong>included accelerators</strong> within a portal implementation engagement — not as separate line items. The value is that the client gets a faster, more reliable implementation; the agency's value is faster delivery at higher margin on a fixed-fee project.</div></li>
+            <li><div class="li-content">For each engine, document the standard integration effort (e.g. "Engine 01 integration: 3 days of engineering time") so the team can reliably estimate the saving vs building from scratch on each project.</div></li>
+            <li><div class="li-content">As engines mature across multiple deliveries, they can be positioned externally as a <strong>differentiator</strong> in sales conversations: "we have pre-built, production-tested modules for scheduling, access control, notifications, document management, and reporting — your project benefits from these immediately."</div></li>
+            <li><div class="li-content">Engines 02–05 are <strong>to be built</strong> — they are not yet in the asset inventory. Prioritize by frequency of need: RBAC (Engine 02) appears in nearly every enterprise portal; Notifications (Engine 03) is close behind. Recommend building in this order: 02 → 03 → 05 → 04.</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== ASSET BUILD LIST ===================== -->
+  <div class="panel" id="tab-assets">
+    <div class="service-card">
+      <div class="service-header">
+        <div class="service-num">REC</div>
+        <div class="service-header-text">
+          <div class="service-title">Recommended Reusable Assets to Build</div>
+          <div class="service-tagline">14 assets across Business Analysis, UX/Design, Testing & QA, and Delivery Operations — ranked by priority and mapped to the services they unlock or strengthen.</div>
+        </div>
+      </div>
+      <div style="padding: 24px 28px;">
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:20px;line-height:1.7">These are assets the client should invest in creating. Each one either unlocks a new productized service, removes a key-person dependency, or improves the defensibility and margin of an existing service. Prioritized by impact on the current portfolio.</p>
+
+        <table class="assets-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Asset</th>
+              <th>Category</th>
+              <th>Unlocks / Strengthens</th>
+              <th>Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">01</td>
+              <td><strong>SRS / Discovery Report template</strong><br><span style="font-size:12px;color:var(--text-secondary)">A structured, fillable template for the full Software Requirements Specification output of a discovery engagement — covering scope, architecture decisions, non-functional requirements, backlog, and delivery plan sections.</span></td>
+              <td><span class="cat-badge">Business Analysis</span></td>
+              <td style="font-size:12px">PS#3 (required for productization); reduces senior BA effort by ~35% per engagement</td>
+              <td><span class="pri-high">High</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">02</td>
+              <td><strong>Technical debt scoring rubric (Sitefinity)</strong><br><span style="font-size:12px;color:var(--text-secondary)">A standardized rubric with defined scoring dimensions and point values for assessing Sitefinity implementation health — enabling any senior consultant to deliver the CMS Health Check (PS#5) without the original author.</span></td>
+              <td><span class="cat-badge">Business Analysis</span></td>
+              <td style="font-size:12px">PS#5 (required before productization); removes key-person dependency</td>
+              <td><span class="pri-high">High</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">03</td>
+              <td><strong>Cloud audit checklist (AWS / Azure / GCP)</strong><br><span style="font-size:12px;color:var(--text-secondary)">Platform-specific checklists covering waste identification, right-sizing, commitment analysis, architecture-level savings, and licensing optimization — structured so any cloud-certified team member can run a consistent audit.</span></td>
+              <td><span class="cat-badge">Delivery Operations</span></td>
+              <td style="font-size:12px">PS#7 (required for productization); enables parallel delivery by multiple team members</td>
+              <td><span class="pri-high">High</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">04</td>
+              <td><strong>User story map and estimation model template</strong><br><span style="font-size:12px;color:var(--text-secondary)">A reusable story mapping framework with built-in effort estimation logic — covering story points, team velocity inputs, and automatic delivery timeline projection. Enables consistent backlog estimation across discovery engagements.</span></td>
+              <td><span class="cat-badge">Business Analysis</span></td>
+              <td style="font-size:12px">PS#3 (reduces estimation effort per engagement by ~30%); improves delivery plan accuracy</td>
+              <td><span class="pri-high">High</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">05</td>
+              <td><strong>Portal wireframe component library</strong><br><span style="font-size:12px;color:var(--text-secondary)">A Figma (or equivalent) library of low-fidelity wireframe components for common enterprise portal patterns — authentication flows, dashboards, data tables, form wizards, notification centers, document lists, and admin panels. Reused across all discovery engagements.</span></td>
+              <td><span class="cat-badge">UX / Design</span></td>
+              <td style="font-size:12px">PS#3 (reduces wireframe production time by ~40–50%); directly supports the "UX flows + wireframes" deliverable</td>
+              <td><span class="pri-high">High</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">06</td>
+              <td><strong>User journey mapping template kit</strong><br><span style="font-size:12px;color:var(--text-secondary)">A reusable Miro (or FigJam) template kit covering the key enterprise portal persona types — admin, end-user, content editor, integration consumer — with pre-built journey stages, touchpoint rows, and emotion mapping. Adaptable to any industry vertical.</span></td>
+              <td><span class="cat-badge">UX / Design</span></td>
+              <td style="font-size:12px">PS#3 (accelerates the user journey mapping deliverable); strengthens the "proof of UX expertise" in sales conversations</td>
+              <td><span class="pri-med">Medium</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">07</td>
+              <td><strong>Migration QA checklist and validation report template</strong><br><span style="font-size:12px;color:var(--text-secondary)">A structured QA checklist for CMS migration validation — covering content count checks, field consistency, taxonomy validation, media references, rendering regression, and UAT sign-off. Paired with a report template that produces a consistent validation deliverable across all PS#2 engagements.</span></td>
+              <td><span class="cat-badge">Testing & QA</span></td>
+              <td style="font-size:12px">PS#2 (standardizes the validation deliverable; reduces QA setup time per engagement); strengthens KO-B measurability</td>
+              <td><span class="pri-med">Medium</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">08</td>
+              <td><strong>Portal functional acceptance test suite template</strong><br><span style="font-size:12px;color:var(--text-secondary)">A reusable test case library covering the core functional areas of enterprise portals — authentication, RBAC, notifications, document handling, search, reporting, and API integrations. Provides a starting test suite that can be adapted to each project rather than written from scratch.</span></td>
+              <td><span class="cat-badge">Testing & QA</span></td>
+              <td style="font-size:12px">All portal implementation projects; reduces test planning effort by ~30% per engagement; supports the PS#4 engine approach</td>
+              <td><span class="pri-med">Medium</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">09</td>
+              <td><strong>RAID log and project governance template pack</strong><br><span style="font-size:12px;color:var(--text-secondary)">A set of standardized project governance documents — RAID log, RACI matrix, Definition of Ready/Done, change request log, and meeting cadence agenda templates — reusable across all service engagements as part of the standard delivery kit.</span></td>
+              <td><span class="cat-badge">Delivery Operations</span></td>
+              <td style="font-size:12px">PS#3 (RAID log is a named deliverable); all engagements (reduces PM setup time; ensures governance consistency)</td>
+              <td><span class="pri-med">Medium</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">10</td>
+              <td><strong>Client onboarding kit (inputs, access, and kickoff templates)</strong><br><span style="font-size:12px;color:var(--text-secondary)">A standardized client-facing onboarding package — covering the inputs needed before work begins, the access and credential request process, the kickoff agenda, and the first-week checklist. Reduces the time from contract signature to first billable day.</span></td>
+              <td><span class="cat-badge">Delivery Operations</span></td>
+              <td style="font-size:12px">All services; a consistent onboarding experience is a trust signal and a margin protector — delays in getting access are the most common reason for billing start delays</td>
+              <td><span class="pri-med">Medium</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">11</td>
+              <td><strong>Multilingual tool documentation (asset register entry)</strong><br><span style="font-size:12px;color:var(--text-secondary)">Formal documentation of the proprietary multilingual tool following the reusable asset format: what it does, when it is used, effort saved, assumptions, dependencies, technical maturity, and compatibility matrix. Required before any team member other than the founder can deliver PS#6.</span></td>
+              <td><span class="cat-badge">Delivery Operations</span></td>
+              <td style="font-size:12px">PS#6 (required before productization); removes the founding team as single point of failure on this service</td>
+              <td><span class="pri-high">High</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">12</td>
+              <td><strong>Cloud savings executive summary report template</strong><br><span style="font-size:12px;color:var(--text-secondary)">A single-page (or short-slide) CFO-facing report template for the cloud optimization audit — showing total identified savings by time horizon (0–30, 30–90, 90+ days), broken down by service/resource type, with an ROI summary vs audit fee. Designed to be produced in under 30 minutes from the audit findings.</span></td>
+              <td><span class="cat-badge">Delivery Operations</span></td>
+              <td style="font-size:12px">PS#7 (required as a standard deliverable); enables the gain-share pricing conversation with a CFO-ready artifact</td>
+              <td><span class="pri-high">High</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">13</td>
+              <td><strong>Accessibility audit checklist (WCAG 2.1 AA)</strong><br><span style="font-size:12px;color:var(--text-secondary)">A structured checklist for evaluating portal accessibility against WCAG 2.1 AA standards — covering color contrast, keyboard navigation, screen reader compatibility, form labeling, and focus management. Particularly relevant for financial services and government-adjacent clients where accessibility is a compliance requirement.</span></td>
+              <td><span class="cat-badge">Testing & QA</span></td>
+              <td style="font-size:12px">PS#3 (adds a compliance-relevant deliverable option); strengthens positioning for regulated industry clients; potential standalone mini-service</td>
+              <td><span class="pri-low">Lower</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">14</td>
+              <td><strong>Performance baseline and load test report template</strong><br><span style="font-size:12px;color:var(--text-secondary)">A reusable template for documenting portal performance baselines (page load time, API response time, concurrent user capacity) and load test results — structured so the output is comparable across projects and can be referenced in case studies as a "before/after" metric.</span></td>
+              <td><span class="cat-badge">Testing & QA</span></td>
+              <td style="font-size:12px">All portal projects; enables measurable performance improvement claims in case studies; supports premium pricing on performance-sensitive projects</td>
+              <td><span class="pri-low">Lower</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:24px;padding:16px 18px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;">
+          <div class="slabel" style="margin-top:0">Suggested build sequence</div>
+          <div class="chain">
+            <div class="chain-node">01 SRS Template</div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-node">05 Wireframe Library</div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-node">04 Estimation Model</div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-node">PS#3 ready</div>
+          </div>
+          <div class="chain" style="margin-top:10px">
+            <div class="chain-node">02 Debt Rubric</div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-node">07 Migration QA Template</div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-node">PS#5 ready</div>
+          </div>
+          <div class="chain" style="margin-top:10px">
+            <div class="chain-node">03 Cloud Checklist</div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-node">12 Executive Summary</div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-node">PS#7 fully productized</div>
+          </div>
+          <div class="chain" style="margin-top:10px">
+            <div class="chain-node">11 Multilingual Docs</div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-node">PS#6 ready to scale</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  const tabs = document.querySelectorAll('.tab');
+  const ids = ['ps1','ps2','ps3','ps5','ps6','ps7','ps4','assets'];
+  const idx = ids.indexOf(id);
+  if (idx >= 0) tabs[idx].classList.add('active');
+  const panel = document.getElementById('tab-' + id);
+  if (panel) panel.classList.add('active');
+}
+
+function switchInner(service, section) {
+  const card = document.getElementById('tab-' + service);
+  if (!card) return;
+  card.querySelectorAll('.itab').forEach(t => t.classList.remove('active'));
+  card.querySelectorAll('.inner-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById(service + '-' + section);
+  if (panel) panel.classList.add('active');
+  const tabs = card.querySelectorAll('.itab');
+  const sections = ['scope','deliverables','pricing','assets','gaps'];
+  const idx = sections.indexOf(section);
+  if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
+}
+</script>
+</body>
+</html>
